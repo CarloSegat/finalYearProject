@@ -27,8 +27,9 @@ maxlen       = 100   # max number of words in a comment to use
 myActivationFunction = 'tanh'	
 
 ### Load data
-list_sentences_train = loadSentences('2017ATrain.txt')
-y = loadTargets('2017ATrain.txt')	
+list_sentences_train = loadSentences('..\data\SEData\2017\4a-english\4A-English\SemEval2017-task4-dev.subtask-A.english.INPUT.txt')
+list_sentences_test = loadSentences("'..\data\SEData\2016\devtest\100_topics_100_tweets.sentence-three-point.subtask-A.devtest.gold.txt")
+y = loadTargets('..\data\SEData\2017\4a-english\4A-English\SemEval2017-task4-dev.subtask-A.english.INPUT.txt')	
 assert(y.shape[0] == len(list_sentences_train))
 list_classes = ["positive", "neutral", "negative"]
 

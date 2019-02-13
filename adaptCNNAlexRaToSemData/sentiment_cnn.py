@@ -23,7 +23,7 @@ import numpy as np
 import data_helpers
 from w2v import train_word2vec
 from keras.models import Sequential, Model
-from keras.layers import Dense, Dropout, Flatten, Input, MaxPooling1D, Convolution1D, Embedding
+from keras.layers import Dense, Dropout, Flatten, Input, MaxPooling1D, Convolution1D, Embedding, GlobalMaxPooling1D
 from keras.layers.merge import Concatenate
 from keras.datasets import imdb
 from keras.preprocessing import sequence
@@ -42,41 +42,33 @@ model_type = "CNN-non-static"  # CNN-rand|CNN-non-static|CNN-static
 data_source = "keras_data_set"  # keras_data_set|local_dir
 
 # Model Hyperparameters
-embedding_dim = 50
-filter_sizes = (3, 8)
-num_filters = 10
+embedding_dim = 300
+filter_sizes = (3, 4, 5, 6)#(3, 8)
+num_filters = 100
 dropout_prob = (0.5, 0.8)
 hidden_dims = 50
 
-# Training parameters
 batch_size = 64
-num_epochs = 10
 
-# Prepossessing parameters
 sequence_length = 90
-max_words = 5000
 
 # Word2Vec parameters (see train_word2vec)
 min_word_count = 1
 context = 10
 
 pathA = "../data/SEData/2017/4a-english/4A-English/"
-pathCE = "../data/SEData/2017/4c-english/4C-English/"
+pathB = "../data/SEData/2017/4b-english/4B-English/"
+pathCE = "../data/SEData/2017/4c-english/4C-English/" #"SemEval2017-task4-dev.subtask-BD.english.INPUT.txt"
+
+path2016 = "../data/SEData/2016/devtest/"
 files = {
-	"train":(pathA+'SemEval2017-task4-dev.subtask-A.english.INPUT.txt', 3),
-	"test" :(pathCE+'SemEval2017-task4-dev.subtask-CE.english.INPUT.txt', 4)
+	"train":(pathA + 'SemEval2017-task4-dev.subtask-A.english.INPUT.txt', 3),
+	"test" :(path2016 + '100_topics_100_tweets.sentence-three-point.subtask-A.devtest.gold.txt', 3)
 }
 
-
-
-print("Load data...")
 x_train, y_train, x_test, y_test, vocabulary_inv = loadData(files, 20000, cleaning=True)
-#pdb.set_trace()
-print("x_train shape:", x_train.shape)
-print("x_test shape:", x_test.shape)
-print("Vocabulary Size: {:d}".format(len(vocabulary_inv)))
+pdb.set_trace()
 
-print("Model type is", model_type)
 if model_type in ["CNN-non-static", "CNN-static"]:
     embedding_weights = train_word2vec(np.vstack((x_train, x_test)), vocabulary_inv, num_features=embedding_dim,
                                        min_word_count=min_word_count, context=context)
@@ -110,15 +102,16 @@ z = Dropout(dropout_prob[0])(z)
 # Convolutional block
 conv_blocks = []
 for sz in filter_sizes:
-    conv = Convolution1D(filters=num_filters,
-                         kernel_size=sz,
-                         padding="valid",
-                         activation="relu",
-                         strides=1)(z)
-    conv = MaxPooling1D(pool_size=2)(conv)
-    conv = Flatten()(conv)
-    conv_blocks.append(conv)
-z = Concatenate()(conv_blocks) if len(conv_blocks) > 1 else conv_blocks[0]
+	conv = Convolution1D(filters=num_filters,
+						 kernel_size=sz,
+						 padding="valid",
+						 activation="relu",
+						 strides=1)(z)
+	conv = MaxPooling1D(pool_size=2)(conv)
+	#conv = GlobalMaxPooling1D()(conv) Global max pooling seem to be worse than MaxPooling
+	conv = Flatten()(conv)
+	conv_blocks.append(conv)
+z = Concatenate()(conv_blocks) 
 
 z = Dropout(dropout_prob[1])(z)
 z = Dense(hidden_dims, activation="relu")(z)
@@ -135,7 +128,7 @@ if model_type == "CNN-non-static":
     embedding_layer.set_weights([weights])
 
 # Train the model
-model.fit(np.array(x_train), np.array(y_train), batch_size=batch_size, epochs=3, validation_split=0.1)
+model.fit(np.array(x_train), np.array(y_train), batch_size=batch_size, epochs=4)
 score, accuracy = model.evaluate(x_test, y_test, batch_size=batch_size)
 print("score: " + str(score))
 print("acuracy: " + str(accuracy))

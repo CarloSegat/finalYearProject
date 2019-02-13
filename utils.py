@@ -3,20 +3,16 @@ import numpy as np
 import pdb
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
-
 from gensim.models import *
-
 from ekphrasis.classes.preprocessor import TextPreProcessor
 from ekphrasis.classes.tokenizer import SocialTokenizer
 from ekphrasis.dicts.emoticons import emoticons
 from ekphrasis.classes.segmenter import Segmenter
 from ekphrasis.classes.spellcorrect import SpellCorrector
-
 from nltk.corpus import stopwords
 import nltk
 
-labels3 = {
-		'positive': 1, 
+labels3 = {'positive': 1, 
 		'neutral': 0, 
 		'negative': -1,
 		'2' : 1, 
@@ -25,8 +21,7 @@ labels3 = {
 		'-1': -1,
 		'-2': -1}
 
-labels5 = {
-		'2' : 2, 
+labels5 = {'2' : 2, 
 		'1' : 1, 
 		'0' : 0,
 		'-1': -1, 
@@ -34,11 +29,7 @@ labels5 = {
 		'positive': 1, 
 		'neutral': 0, 
 		'negative': -1}
-		
-
-
-sp = SpellCorrector(corpus="english") 
-seg_eng = Segmenter(corpus="english") 		
+				
 text_processor = TextPreProcessor(
 	normalize=['url', 'email', 'percent', 'money', 'phone', 'user',
 		'time', 'url', 'date', 'number'],
@@ -73,7 +64,7 @@ def loadData(files, elementsPerLine, maxLen=90, turnInputIntoEmbedding=False, cl
 		xt = [preprocess(sentence) for sentence in xt]
 		x = [s[1:-2].strip() if (s[0] == s[-1] == "\"") else s.strip() for s in x] 
 		xt = [s[1:-2].strip() if (s[0] == s[-1] == "\"") else s.strip() for s in xt] 	
-		
+	# create tokenizer and threfore word index using both sentences fro test and train
 	tokenizer = makeTokenizer(x + xt, 20000)
 	x = tokenizer.texts_to_sequences(x)
 	x = pad_sequences(x, maxLen, padding='post')
@@ -82,24 +73,17 @@ def loadData(files, elementsPerLine, maxLen=90, turnInputIntoEmbedding=False, cl
 	xt = pad_sequences(xt, maxLen, padding='post')
 	intToWord = {int: word for word, int in tokenizer.word_index.items()}
 	intToWord[0] = "PAD"
-	#embedding = voc2vec(300, wordsUsed)
-	#if turnInputIntoEmbedding:
-		# all words of the index are in the embedding, after tokenisation only words of the index are left in the senences
-		#x = [[embedding[word] for word in sentence] for sentence in x]
 	return x, y, xt, yt, intToWord
 
 def loadRaw(fileName, elementsPerLine, classes,):
-	''' Dont need to return a numpy list'''
-	
 	x = []
 	y = []
 	with open(fileName, 'r') as input:
 		lines = input.read().splitlines()
 		for line in lines:
-			
-				
 			idClassSetence = re.split(r'\t', line.strip())
 			try:
+				# sometimes a tweet is not just one element of a list but it gets split in two
 				if len(idClassSetence) == elementsPerLine:
 					sentenceIndex = -1
 					classIndex = -2
@@ -132,10 +116,22 @@ def makeTokenizer(sentences, wordsUsed):
 	tokenizer.fit_on_texts(list(sentences))
 	return tokenizer
 
+def decontracted(phrase):
+	phrase = re.sub(r"won\'t", "will not", phrase)
+	phrase = re.sub(r"can\'t", "can not", phrase)
+	phrase = re.sub(r"n\'t", " not", phrase)
+	phrase = re.sub(r"\'re", " are", phrase)
+	phrase = re.sub(r"he\'s", "he is", phrase)
+	phrase = re.sub(r"she\'s", "she is", phrase)
+	phrase = re.sub(r"\'ll", " will", phrase)
+	phrase = re.sub(r"\'ve", " have", phrase)
+	phrase = re.sub(r"\'m", " am", phrase)
+	return phrase
+
+	
+'''
 def voc2vec(embedLength, wordsUsed):
-	'''
-	Generate the embedding matrix from the words in the index
-	'''
+	#Generate the embedding matrix from the words in the index
 	googleModel = KeyedVectors.load_word2vec_format('data/GoogleNews-vectors-negative300.bin', binary=True)  
 	wv = googleModel.wv
 	# TODO mean and deviation of googles data
@@ -148,17 +144,10 @@ def voc2vec(embedLength, wordsUsed):
 			embedding_matrix[index] = embedding_vector
 		except KeyError:
 			embedding_matrix[index] = embedding_matrix[index]
+			
+			#embedding = voc2vec(300, wordsUsed)
+	#if turnInputIntoEmbedding:
+		# all words of the index are in the embedding, after tokenisation only words of the index are left in the senences
+		#x = [[embedding[word] for word in sentence] for sentence in x]
 	return embedding_matrix
-
-def decontracted(phrase):
-	phrase = re.sub(r"won\'t", "will not", phrase)
-	phrase = re.sub(r"can\'t", "can not", phrase)
-	phrase = re.sub(r"n\'t", " not", phrase)
-	phrase = re.sub(r"\'re", " are", phrase)
-	phrase = re.sub(r"he\'s", "he is", phrase)
-	phrase = re.sub(r"she\'s", "she is", phrase)
-	phrase = re.sub(r"\'d", " would", phrase)
-	phrase = re.sub(r"\'ll", " will", phrase)
-	phrase = re.sub(r"\'ve", " have", phrase)
-	phrase = re.sub(r"\'m", " am", phrase)
-	return phrase
+'''

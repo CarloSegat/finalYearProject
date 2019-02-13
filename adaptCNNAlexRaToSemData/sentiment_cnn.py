@@ -27,12 +27,14 @@ from keras.layers import Dense, Dropout, Flatten, Input, MaxPooling1D, Convoluti
 from keras.layers.merge import Concatenate
 from keras.datasets import imdb
 from keras.preprocessing import sequence
-from ../utils import *
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir) 
+from utils import loadData
 
 np.random.seed(0)
 
-# ---------------------- Parameters section -------------------
-#
 # Model type. See Kim Yoon's Convolutional Neural Networks for Sentence Classification, Section 3
 model_type = "CNN-non-static"  # CNN-rand|CNN-non-static|CNN-static
 
@@ -51,61 +53,29 @@ batch_size = 64
 num_epochs = 10
 
 # Prepossessing parameters
-sequence_length = 400
+sequence_length = 90
 max_words = 5000
 
 # Word2Vec parameters (see train_word2vec)
 min_word_count = 1
 context = 10
 
-#
-# ---------------------- Parameters end -----------------------
+pathA = "../data/SEData/2017/4a-english/4A-English/"
+pathCE = "../data/SEData/2017/4c-english/4C-English/"
+files = {
+	"train":(pathA+'SemEval2017-task4-dev.subtask-A.english.INPUT.txt', 3),
+	"test" :(pathCE+'SemEval2017-task4-dev.subtask-CE.english.INPUT.txt', 4)
+}
 
 
-def load_data(data_source):
-    assert data_source in ["keras_data_set", "local_dir"], "Unknown data source"
-    if data_source == "keras_data_set":
-        (x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_words, start_char=None,
-                                                              oov_char=None, index_from=None)
 
-        x_train = sequence.pad_sequences(x_train, maxlen=sequence_length, padding="post", truncating="post")
-        x_test = sequence.pad_sequences(x_test, maxlen=sequence_length, padding="post", truncating="post")
-
-        vocabulary = imdb.get_word_index()
-        pdb.set_trace()
-        vocabulary_inv = dict((v, k) for k, v in vocabulary.items())
-        vocabulary_inv[0] = "<PAD/>"
-    else:
-        x, y, vocabulary, vocabulary_inv_list = data_helpers.load_data()
-        vocabulary_inv = {key: value for key, value in enumerate(vocabulary_inv_list)}
-        y = y.argmax(axis=1)
-
-        # Shuffle data
-        shuffle_indices = np.random.permutation(np.arange(len(y)))
-        x = x[shuffle_indices]
-        y = y[shuffle_indices]
-        train_len = int(len(x) * 0.9)
-        x_train = x[:train_len]
-        y_train = y[:train_len]
-        x_test = x[train_len:]
-        y_test = y[train_len:]
-
-    return x_train, y_train, x_test, y_test, vocabulary_inv
-
-
-# Data Preparation
 print("Load data...")
-x_train, y_train, x_test, y_test, vocabulary_inv = load_data(data_source)
-
-if sequence_length != x_test.shape[1]:
-    print("Adjusting sequence length for actual size")
-    sequence_length = x_test.shape[1]
-
+x_train, y_train, x_test, y_test, vocabulary_inv = loadData(files, 20000, cleaning=True)
+#pdb.set_trace()
 print("x_train shape:", x_train.shape)
 print("x_test shape:", x_test.shape)
 print("Vocabulary Size: {:d}".format(len(vocabulary_inv)))
 
-# Prepare embedding layer weights and convert inputs for static model
 print("Model type is", model_type)
 if model_type in ["CNN-non-static", "CNN-static"]:
     embedding_weights = train_word2vec(np.vstack((x_train, x_test)), vocabulary_inv, num_features=embedding_dim,
@@ -165,5 +135,7 @@ if model_type == "CNN-non-static":
     embedding_layer.set_weights([weights])
 
 # Train the model
-model.fit(x_train, y_train, batch_size=batch_size, epochs=num_epochs,
-          validation_data=(x_test, y_test), verbose=2)
+model.fit(np.array(x_train), np.array(y_train), batch_size=batch_size, epochs=3, validation_split=0.1)
+score, accuracy = model.evaluate(x_test, y_test, batch_size=batch_size)
+print("score: " + str(score))
+print("acuracy: " + str(accuracy))

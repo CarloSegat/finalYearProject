@@ -71,7 +71,6 @@ def load_data(data_source):
         x_test = sequence.pad_sequences(x_test, maxlen=sequence_length, padding="post", truncating="post")
 
         vocabulary = imdb.get_word_index()
-        pdb.set_trace()
         vocabulary_inv = dict((v, k) for k, v in vocabulary.items())
         vocabulary_inv[0] = "<PAD/>"
     else:
@@ -164,5 +163,6 @@ if model_type == "CNN-non-static":
     embedding_layer.set_weights([weights])
 
 # Train the model
+pdb.set_trace()
 model.fit(x_train, y_train, batch_size=batch_size, epochs=num_epochs,
           validation_data=(x_test, y_test), verbose=2)

@@ -3,7 +3,7 @@ from gensim.models import word2vec
 from os.path import join, exists, split
 import os
 import numpy as np
-
+import pdb
 
 def train_word2vec(sentence_matrix, vocabulary_inv,
                    num_features=300, min_word_count=1, context=10):
@@ -18,6 +18,7 @@ def train_word2vec(sentence_matrix, vocabulary_inv,
     min_word_count  # Minimum word count                        
     context         # Context window size 
     """
+ 
     model_dir = 'models'
     model_name = "{:d}features_{:d}minwords_{:d}context".format(num_features, min_word_count, context)
     model_name = join(model_dir, model_name)

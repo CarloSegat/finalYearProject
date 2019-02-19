@@ -11,24 +11,24 @@ from ekphrasis.classes.segmenter import Segmenter
 from ekphrasis.classes.spellcorrect import SpellCorrector
 from nltk.corpus import stopwords
 import nltk
+from collections import Counter
+labels3 = {'positive': 2,
+		'neutral': 1,
+		'negative': 0,
+		'2' : 2,
+		'1' : 2,
+		'0' : 1,
+		'-1': 0,
+		'-2': 0}
 
-labels3 = {'positive': 1, 
-		'neutral': 0, 
-		'negative': -1,
-		'2' : 1, 
-		'1' : 1, 
-		'0' : 0, 
-		'-1': -1,
-		'-2': -1}
-
-labels5 = {'2' : 2, 
-		'1' : 1, 
-		'0' : 0,
-		'-1': -1, 
-		'-2': -2,
-		'positive': 1, 
-		'neutral': 0, 
-		'negative': -1}
+labels5 = {'2' : 4,
+		'1' : 3,
+		'0' : 2,
+		'-1': 1,
+		'-2': 0,
+		'positive': 3,
+		'neutral': 2,
+		'negative': 1}
 				
 text_processor = TextPreProcessor(
 	normalize=['url', 'email', 'percent', 'money', 'phone', 'user',
@@ -57,8 +57,15 @@ text_processor = TextPreProcessor(
 )
 
 def loadData(files, elementsPerLine, maxLen=90, turnInputIntoEmbedding=False, cleaning=False, classes=3):
-	x, y = loadRaw(files["train"][0], files["train"][1], classes)
-	xt, yt = loadRaw(files["test"][0], files["test"][1], classes)
+	x, y, xt, yt = [], [], [], []
+	for file in files["train"]:
+		temp_x, temp_y = loadRaw(file[0], file[1], classes)
+		x = x + temp_x
+		y = y + temp_y
+	for file in files["test"]:
+		temp_xt, temp_yt = loadRaw(file[0], file[1], classes)
+		xt = xt + temp_xt
+		yt = yt + temp_yt
 	if cleaning:
 		x = [preprocess(sentence) for sentence in x]
 		xt = [preprocess(sentence) for sentence in xt]
@@ -78,8 +85,8 @@ def loadData(files, elementsPerLine, maxLen=90, turnInputIntoEmbedding=False, cl
 def loadRaw(fileName, elementsPerLine, classes,):
 	x = []
 	y = []
-	with open(fileName, 'r') as input:
-		lines = input.read().splitlines()
+	with open(fileName, 'r') as fileName:
+		lines = fileName.read().splitlines()
 		for line in lines:
 			idClassSetence = re.split(r'\t', line.strip())
 			try:
@@ -128,7 +135,40 @@ def decontracted(phrase):
 	phrase = re.sub(r"\'m", " am", phrase)
 	return phrase
 
-	
+def classification_report(y_true, y_pred, labels):
+    '''Taken from kers-contrib
+    https://github.com/keras-team/keras-contrib/blob/master/examples/conll2000_chunking_crf.py'''
+    y_true = np.asarray(y_true).ravel()
+    y_pred = np.asarray(y_pred).ravel()
+    corrects = Counter(yt for yt, yp in zip(y_true, y_pred) if yt == yp)
+    y_true_counts = Counter(y_true)
+    y_pred_counts = Counter(y_pred)
+    report = ((lab,  # label
+               corrects[i] / max(1, y_true_counts[i]),  # recall
+               corrects[i] / max(1, y_pred_counts[i]),  # precision
+               y_true_counts[i]  # support
+               ) for i, lab in enumerate(labels))
+    report = [(l, r, p, 2 * r * p / max(1e-9, r + p), s) for l, r, p, s in report]
+
+    print('{:<15}{:>10}{:>10}{:>10}{:>10}\n'.format('',
+                                                    'recall',
+                                                    'precision',
+                                                    'f1-score',
+                                                    'support'))
+    formatter = '{:<15}{:>10.2f}{:>10.2f}{:>10.2f}{:>10d}'.format
+    for r in report:
+        print(formatter(*r))
+    print('')
+    report2 = list(zip(*[(r * s, p * s, f1 * s) for l, r, p, f1, s in report]))
+    N = len(y_true)
+    print(formatter('avg / total',
+                    sum(report2[0]) / N,
+                    sum(report2[1]) / N,
+                    sum(report2[2]) / N, N) + '\n')
+
+
+
+
 '''
 def voc2vec(embedLength, wordsUsed):
 	#Generate the embedding matrix from the words in the index

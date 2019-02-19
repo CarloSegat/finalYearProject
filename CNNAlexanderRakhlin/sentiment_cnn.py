@@ -162,7 +162,6 @@ if model_type == "CNN-non-static":
     embedding_layer = model.get_layer("embedding")
     embedding_layer.set_weights([weights])
 
-# Train the model
-pdb.set_trace()
+# Train the model)
 model.fit(x_train, y_train, batch_size=batch_size, epochs=num_epochs,
           validation_data=(x_test, y_test), verbose=2)

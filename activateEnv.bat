@@ -1,1 +1,0 @@
-cmd /k activate tf_gpu

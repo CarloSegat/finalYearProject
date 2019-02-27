@@ -10,7 +10,8 @@ from keras.utils import to_categorical
 from keras.datasets import imdb
 from keras.preprocessing import sequence
 import os, sys, inspect
-
+import gzip
+import pickle as pkl
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
@@ -46,21 +47,23 @@ files = {
     "test": [("../data/SEData/2017/englishTrainingData/Subtask_A/twitter-2016test-A.txt", 3)]
 }
 
-x_train, y_train, x_test, y_test, vocabulary_inv = loadData(files, 30000, cleaning=True)
-
-if model_type in ["CNN-non-static", "CNN-static"]:
-    embedding_weights = train_word2vec(np.vstack((x_train, x_test)), vocabulary_inv, num_features=embedding_dim,
-                                       min_word_count=min_word_count, context=context)
-    if model_type == "CNN-static":
-        x_train = np.stack([np.stack([embedding_weights[word] for word in sentence]) for sentence in x_train])
-        x_test = np.stack([np.stack([embedding_weights[word] for word in sentence]) for sentence in x_test])
-        print("x_train static shape:", x_train.shape)
-        print("x_test static shape:", x_test.shape)
-
-elif model_type == "CNN-rand":
+x_train, y_train, x_test, y_test, vocabulary_inv, embeddings = loadData(files, 30000, cleaning=True)
+file = gzip.open("../data/suresh_loaded_all.pkl.gz", "r")
+data = pkl.load(file)
+file.close()
+all_w = data['all_word_to_emb']
+assert(len(embeddings) == len(vocabulary_inv))
+#if model_type in ["CNN-non-static", "CNN-static"]:
+    #embedding_weights = train_word2vec(np.vstack((x_train, x_test)), vocabulary_inv, num_features=embedding_dim,
+    #                                   min_word_count=min_word_count, context=context)
+    #if model_type == "CNN-static":
+    #    x_train = np.stack([np.stack([embedding_weights[word] for word in sentence]) for sentence in x_train])
+    #    x_test = np.stack([np.stack([embedding_weights[word] for word in sentence]) for sentence in x_test])
+    #    print("x_train static shape:", x_train.shape)
+    #    print("x_test static shape:", x_test.shape)
+if model_type == "CNN-rand":
     embedding_weights = None
-else:
-    raise ValueError("Unknown model type")
+
 
 # Build model
 if model_type == "CNN-static":
@@ -101,10 +104,10 @@ model.compile(loss="binary_crossentropy", optimizer="adam", metrics=["accuracy"]
 print(model.summary())
 # Initialize weights with word2vec
 if model_type == "CNN-non-static":
-    weights = np.array([v for v in embedding_weights.values()])
-    print("Initializing embedding layer with word2vec weights, shape", weights.shape)
+    #weights = np.array([v for v in embedding_weights.values()])
+    #print("Initializing embedding layer with word2vec weights, shape", weights.shape)
     embedding_layer = model.get_layer("embedding")
-    embedding_layer.set_weights([weights])
+    embedding_layer.set_weights([embeddings])
 
 # Train the model
 y_train = to_categorical(y_train, num_classes=3, dtype='int32')

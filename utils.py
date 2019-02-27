@@ -12,6 +12,13 @@ from ekphrasis.classes.spellcorrect import SpellCorrector
 from nltk.corpus import stopwords
 import nltk
 from collections import Counter
+import pickle as pkl
+import gzip
+import os
+import sys
+
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 labels3 = {'positive': 2,
 		'neutral': 1,
 		'negative': 0,
@@ -78,9 +85,12 @@ def loadData(files, elementsPerLine, maxLen=90, turnInputIntoEmbedding=False, cl
 	
 	xt = tokenizer.texts_to_sequences(xt)
 	xt = pad_sequences(xt, maxLen, padding='post')
-	intToWord = {int: word for word, int in tokenizer.word_index.items()}
-	intToWord[0] = "PAD"
-	return x, y, xt, yt, intToWord
+	int_to_word = {int: word for word, int in tokenizer.word_index.items()}
+	int_to_word[0] = "PAD"
+
+	embeddings = load_Suresh_embeddings(int_to_word)
+
+	return x, y, xt, yt, int_to_word, embeddings
 
 def loadRaw(fileName, elementsPerLine, classes,):
 	x = []
@@ -166,28 +176,45 @@ def classification_report(y_true, y_pred, labels):
                     sum(report2[1]) / N,
                     sum(report2[2]) / N, N) + '\n')
 
+def load_Suresh_embeddings(int_to_word, embedding_length=300):
+	#np.random.seed(1337)
 
+	output_file = ROOT_DIR + '/data/suresh_loaded.pkl.gz'
+	output_file2 = ROOT_DIR + '/data/suresh_loaded_all.pkl.gz'
+	embeddingsPath = ROOT_DIR + '/data/wiki_extvec.gz'
 
+	if os.path.exists(output_file):
+		file = gzip.open(output_file, "r")
+		data = pkl.load(file)
+		file.close()
+		return data['embeddings']
 
-'''
-def voc2vec(embedLength, wordsUsed):
-	#Generate the embedding matrix from the words in the index
-	googleModel = KeyedVectors.load_word2vec_format('data/GoogleNews-vectors-negative300.bin', binary=True)  
-	wv = googleModel.wv
-	# TODO mean and deviation of googles data
-	embedding_matrix = np.random.normal(0, 3, (wordsUsed, embedLength)) 
-	for word, index in wordIndex.items(): # list of tuples
-		if index >= wordsUsed:
-			continue # Only use the most frequent words up to wordsUsed
-		try:
-			embedding_vector = wv[word]
-			embedding_matrix[index] = embedding_vector
-		except KeyError:
-			embedding_matrix[index] = embedding_matrix[index]
-			
-			#embedding = voc2vec(300, wordsUsed)
-	#if turnInputIntoEmbedding:
-		# all words of the index are in the embedding, after tokenisation only words of the index are left in the senences
-		#x = [[embedding[word] for word in sentence] for sentence in x]
-	return embedding_matrix
-'''
+	embeddings = []
+	fEmbeddings = gzip.open(embeddingsPath, "r")
+	all_word_to_emb = {}
+	for line in fEmbeddings:
+		split = line.decode('utf-8').strip().split(" ")
+		word = split[0]
+		assert(len(split[1:]) == embedding_length)
+		vector = np.array([float(num) for num in split[1:]])
+		all_word_to_emb[word] = vector
+
+	# data2 = {"hi": all_word_to_emb["hi"], "computer": all_word_to_emb["computer"], "bad": all_word_to_emb["bad"],
+	# 		 "trouble": all_word_to_emb["trouble"]}
+	# f2 = gzip.open(output_file2, 'wb')
+	# pkl.dump(data2, f2)
+	# f2.close()
+
+	vector = np.random.uniform(-0.25, 0.25, embedding_length)
+	for i in range(0, len(int_to_word)):
+		current_vocabulary_word = int_to_word[i]
+		if current_vocabulary_word in all_word_to_emb.keys():
+			embeddings.append(all_word_to_emb[current_vocabulary_word])
+		else:
+			embeddings.append(vector)
+	embeddings = np.array(embeddings)
+	data = {'embeddings': embeddings, 'int_to_word': int_to_word}
+	f = gzip.open(output_file, 'wb')
+	pkl.dump(data, f)
+	f.close()
+	return [], []

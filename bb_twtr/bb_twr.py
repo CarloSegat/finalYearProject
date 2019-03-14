@@ -1,18 +1,21 @@
-import pdb
+import collections
+import gzip
 import numpy as np
+from keras.callbacks import ModelCheckpoint
 from keras.models import Sequential, Model
 from keras.layers import Dense, Dropout, Flatten, Input, MaxPooling1D, Convolution1D, Embedding, GlobalMaxPooling1D, \
     LSTM
 from keras.layers.merge import Concatenate
-from keras.utils import to_categorical
-from keras.datasets import imdb
-from keras.preprocessing import sequence
-import os, sys, inspect, random
-from keras import optimizers
+import os, sys, inspect
+from keras import optimizers, callbacks
+from bb_twtr.load_distant_supervision_amazon_data import AmazonSequence
+from loss import f1_score
+import loss
+
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
 sys.path.insert(0, parentdir)
-from utils import loadData, classification_report
+from utils import save_embeddings
 
 np.random.seed(0)
 
@@ -26,55 +29,80 @@ hidden_dims = 30
 batch_size = 64
 sequence_length = 80
 
-# update embeddings?
-fix_embeddings = True
+generator_train = AmazonSequence("../data/train_amazon")
+generator_validation = AmazonSequence("../data/validation_amazon")
 
-files = {
-    "train": [("../data/SEData/2017/englishTrainingData/Subtask_A/twitter-2016train-A.txt", 3),
-              ("../data/SEData/2017/englishTrainingData/Subtask_A/twitter-2016dev-A.txt", 3),
-              ("../data/SEData/2017/englishTrainingData/Subtask_A/twitter-2016devtest-A.txt", 3)],
-    "test": [("../data/SEData/2017/englishTrainingData/Subtask_A/twitter-2016test-A.txt", 3)]
-}
+def make_model(train_flag = True):
+    input_shape = (sequence_length,)
+    model_input = Input(shape=input_shape)
+    # when tuning the embeddign we want all the embeddings int he embeddings layer and not just a selection
+    z = Embedding(number_entries_komn, embedding_dim, input_length=sequence_length,
+                  name="embedding", trainable=train_flag)(model_input)
 
-x_train, y_train, x_test, y_test, vocabulary_inv, embeddings = loadData(files, 30000,  maxLen=sequence_length, cleaning=True)
-assert(len(embeddings) == len(vocabulary_inv))
+    # if fix_embeddings:
+    #     z.trainable = False
+    conv_blocks = []
+    filter_sizes_to_use = filter_sizes[1]
+    for sz in filter_sizes_to_use:
+        conv = Convolution1D(filters=num_filters,
+                             kernel_size=sz,
+                             padding="valid",
+                             activation="relu",
+                             strides=1,
+                             kernel_initializer='orthogonal')(z)
+        conv = GlobalMaxPooling1D()(conv)
+        conv_blocks.append(conv)
+    z = Concatenate()(conv_blocks)
 
-input_shape = (sequence_length,)
-model_input = Input(shape=input_shape)
-z = Embedding(len(vocabulary_inv), embedding_dim, input_length=sequence_length, name="embedding")(model_input)
+    z = Dropout(dropout_prob)(z)
+    z = Dense(hidden_dims, activation='sigmoid')(z) #TODO the paper doesnt say what activation function this layer has
+    model_output = Dense(2, activation="softmax")(z)
 
-if fix_embeddings:
-    z.trainable = False
-conv_blocks = []
-filter_sizes_to_use = filter_sizes[random.randint(0,2)]
-for sz in filter_sizes_to_use:
-    conv = Convolution1D(filters=num_filters,
-                         kernel_size=sz,
-                         padding="valid",
-                         activation="relu",
-                         strides=1)(z)
-    conv = GlobalMaxPooling1D()(conv)
-    conv_blocks.append(conv)
-z = Concatenate()(conv_blocks)
+    model = Model(model_input, model_output)
 
-z = Dropout(dropout_prob)(z)
-z = Dense(hidden_dims)(z) #TODO the paper doesnt say what activation function this layer has
-model_output = Dense(3, activation="softmax")(z)
+    embedding_layer = model.get_layer("embedding")
+    embedding_layer.set_weights([embeddings])
+    nadam = optimizers.nadam(clipnorm=1.)
 
-model = Model(model_input, model_output)
+    c = collections.Counter(y_train)
+    weights = np.array([len(y_train)/c.get(0), len(y_train)/c.get(1), len(y_train)/c.get(2)])
+    weighted_categorical_crossentropy = loss.weighted_categorical_crossentropy(weights)
 
-embedding_layer = model.get_layer("embedding")
-embedding_layer.set_weights([embeddings])
-nadam = optimizers.nadam(clipnorm=1.)
-model.compile(loss="categorical_crossentropy", optimizer=nadam, metrics=["accuracy"])
-print(model.summary())
+    model.compile(loss=weighted_categorical_crossentropy, optimizer=nadam, metrics=[f1_score])
+    print(model.summary())
+    return model
 
-y_train = to_categorical(y_train, num_classes=3, dtype='int32')
-model.fit(np.array(x_train), y_train, batch_size=batch_size, epochs=20)
-y_test_categorcal = to_categorical(y_test, num_classes=3, dtype='int32')
-score, accuracy = model.evaluate(x_test, y_test_categorcal, batch_size=batch_size)
-print("score: " + str(score))
-print("acuracy: " + str(accuracy))
-predicted = model.predict(x_test).argmax(axis=-1)
+model = make_model(False)
 
-classification_report(y_test, predicted, [0, 1, 2])
+es = callbacks.EarlyStopping(monitor='val_f1_score',
+                              patience=2,
+                              verbose=1)
+
+parameters_path = "first_epoch.hdf5"
+checkpoint = ModelCheckpoint(parameters_path, monitor='val_f1_score', verbose=1, save_best_only=True, mode='max')
+
+model.fit_generator(generator=generator_train,
+                                          steps_per_epoch=(66137160 // batch_size),
+                                          epochs=1,
+                                          verbose=1,
+                                          validation_data=generator_validation,
+                                          validation_steps=(16539979 // batch_size),
+                                          use_multiprocessing=True,
+                                          workers=16,
+                                          max_queue_size=32,
+                                          callbacks=[checkpoint])
+
+model = make_model()
+model.load_weights(parameters_path)
+model.fit_generator(generator=generator_train,
+                                          steps_per_epoch=(66137160 // batch_size),
+                                          epochs=6,
+                                          verbose=1,
+                                          validation_data=generator_validation,
+                                          validation_steps=(16539979 // batch_size),
+                                          use_multiprocessing=True,
+                                          workers=16,
+                                          max_queue_size=32,)
+
+save_embeddings(model)
+

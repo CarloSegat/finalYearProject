@@ -213,20 +213,20 @@ def format_xml_for_NER():
 
     # train = "data/SemEval2016-Task5-ABSA/SB1/REST/ABSA16_Restaurants_Train_SB1_v2.xml"
     # test = "data/SemEval2016-Task5-ABSA/SB1/REST/EN_REST_SB1_TEST.xml.gold"
-    # train_out = "NER-ABSA16_Restaurants_Train_SB1_v2.txt"
-    # test_out = "NER-EN_REST_SB1_TEST.xml.gold.txt"
+    # train_out = "2-NER-ABSA16_Restaurants_Train_SB1_v2.txt"
+    # test_out = "2-NER-EN_REST_SB1_TEST.xml.gold.txt"
 
     train = "Aspect-Category-Detection-Model-master/Datasets/ABSA-15_Restaurants_Train_Final.xml"
     test = "Aspect-Category-Detection-Model-master/Datasets/ABSA15_Restaurants_Test.xml"
-    train_out = "NER-ABSA-15_Restaurants_Train+Test_Final.txt"
-    test_out = "NER-ABSA-15_Restaurants_Test.txt"
+    train_out = "2-NER-ABSA-15_Restaurants_Train+Test_Final.txt"
+    test_out = "2-NER-ABSA-15_Restaurants_Test.txt"
 
 
 
 
 
 
-## FOR NER
+## FOR 2-NER
 '''
    # always opinion after review text
                             chars = 0

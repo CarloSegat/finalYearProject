@@ -2,17 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="717dfd74-d65c-4337-b7c6-22250019a2fc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/1-ADC/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/3-Polarity/effective-lstm-target-dependent-sa/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Embeddings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Embeddings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LoadSemEval2016.py" beforeDir="false" afterPath="$PROJECT_DIR$/SemEval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/My-Project-ACD/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/My-Project-ACD/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/My-Project-ACD/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/My-Project-ACD/test.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/My-Project-ACD/train.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextPreprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/TextPreprocessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-ADC/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/data/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/data/rt-polarity.neg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/data/rt-polarity.pos" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/data_helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/docs/1408.5882v2.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/models/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/sentiment_cnn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNNAlexanderRakhlin/w2v.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/My-Project-ACD/Main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SemEval.py" beforeDir="false" afterPath="$PROJECT_DIR$/SemEval.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adaptCNNAlexRaToSemData/data_helpers.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adaptCNNAlexRaToSemData/models/300features_1minwords_10context" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adaptCNNAlexRaToSemData/models/50features_1minwords_10context" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/adaptCNNAlexRaToSemData/w2v.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_twtr/bb_twr.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/bb_twtr/bb_twr.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bb_twtr/load_distant_supervision_amazon_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/bb_twtr/load_distant_supervision_amazon_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/effective-lstm-target-dependent-sa/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/effective-lstm-target-dependent-sa/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/effective-lstm-target-dependent-sa/model.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/Embeddings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="190">
-              <caret line="158" column="18" lean-forward="true" selection-start-line="158" selection-start-column="18" selection-end-line="158" selection-end-column="18" />
+              <caret line="158" column="18" selection-start-line="158" selection-start-column="18" selection-end-line="158" selection-end-column="18" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -34,11 +49,78 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/1-ADC/Main.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+            <state relative-caret-position="235">
+              <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SemEval.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="347">
+              <caret line="115" column="88" selection-start-line="115" selection-start-column="88" selection-end-line="115" selection-end-column="88" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TextPreprocessor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="347">
+              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="48" selection-start-line="48" selection-end-line="48" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/validation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-396" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/prepro.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3609">
+              <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="238" column="19" selection-start-line="238" selection-start-column="19" selection-end-line="238" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -114,7 +196,6 @@
         <option value="$PROJECT_DIR$/bb_twtr/bb_twr.py" />
         <option value="$PROJECT_DIR$/standfordParser.py" />
         <option value="$PROJECT_DIR$/effectiveLSTM-targetDependentSentClass/model.py" />
-        <option value="$PROJECT_DIR$/effective-lstm-target-dependent-sa/README.md" />
         <option value="$PROJECT_DIR$/bb_twtr/load_distant_supervision_amazon_data.py" />
         <option value="$PROJECT_DIR$/Aspect-Category-Detection-Model-master/sentence analysis.ipynb" />
         <option value="$PROJECT_DIR$/Aspect-Category-Detection-Model-master/(ACD) Test.ipynb" />
@@ -150,6 +231,9 @@
         <option value="$PROJECT_DIR$/TextPreprocessor.py" />
         <option value="$PROJECT_DIR$/SemEval.py" />
         <option value="$PROJECT_DIR$/1-ADC/Main.py" />
+        <option value="$PROJECT_DIR$/effective-lstm-target-dependent-sa/README.md" />
+        <option value="$PROJECT_DIR$/2-NER/main.py" />
+        <option value="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/Main.py" />
       </list>
     </option>
   </component>
@@ -198,6 +282,12 @@
               <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
               <item name="1-ADC" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="1-ADC" type="462c0819:PsiDirectoryNode" />
+              <item name="Fully-Connected-SOW" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -217,11 +307,11 @@
       <recent name="D:\finalYearProject\My-Project-ACD" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\finalYearProject\1-ADC\Fully-Connected-SOW" />
+      <recent name="D:\finalYearProject\2-NER\BLSTM-CNN-CHARINFO" />
+      <recent name="D:\finalYearProject\3-Polarity" />
       <recent name="D:\finalYearProject\embeddings\yelp" />
       <recent name="D:\finalYearProject\embeddings\komn" />
-      <recent name="D:\finalYearProject\embeddings\google" />
-      <recent name="D:\finalYearProject\embeddings\glove" />
-      <recent name="D:\finalYearProject\embeddings" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -236,7 +326,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Main">
+  <component name="RunManager" selected="Python.Main (1)">
     <configuration name="Embeddings" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="finalYearProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -279,6 +369,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="finalYearProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/Main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="finalYearProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -291,7 +402,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/1-ADC/Main.py" />
+      <option name="SCRIPT_NAME" value="D:\finalYearProject\1-ADC\Fully-Connected-SOW\Main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -321,34 +432,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="TextPreprocessor" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="finalYearProject" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TextPreprocessor.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Main (1)" />
         <item itemvalue="Python.Main" />
         <item itemvalue="Python.Embeddings" />
         <item itemvalue="Python.SemEval" />
         <item itemvalue="Python.LoadSemEval2016" />
-        <item itemvalue="Python.TextPreprocessor" />
       </list>
     </recent_temporary>
   </component>
@@ -412,7 +502,14 @@
       <option name="project" value="LOCAL" />
       <updated>1554498916105</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Separated out concerns of utils">
+      <created>1554635950647</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1554635950647</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -428,16 +525,16 @@
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.81996435" visible="true" weight="0.1963434" />
-      <window_info id="Structure" order="1" sideWeight="0.18003565" side_tool="true" visible="true" weight="0.1963434" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8198347" visible="true" weight="0.3100159" />
+      <window_info id="Structure" order="1" sideWeight="0.18016529" side_tool="true" visible="true" weight="0.3100159" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32949308" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.39746544" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.30299538" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.30299538" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="6" visible="true" weight="0.35368663" />
+      <window_info anchor="bottom" id="Debug" order="6" weight="0.35368663" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32949308" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.05299539" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32949308" />
@@ -478,7 +575,8 @@
     <MESSAGE value="Can train on multiple files, LSTM layer (improves accuracy), F1 score report, fixed label (cannot have negative labels)" />
     <MESSAGE value="Started supervision w amazon. Gotta create a Sequence to handle big &#10;file" />
     <MESSAGE value="Restart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Restart" />
+    <MESSAGE value="Separated out concerns of utils" />
+    <option name="LAST_COMMIT_MESSAGE" value="Separated out concerns of utils" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -494,7 +592,7 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py</url>
+          <url>file://$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py</url>
           <line>54</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
@@ -504,12 +602,12 @@
           <option name="timeStamp" value="140" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NER/main.py</url>
+          <url>file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/main.py</url>
           <line>254</line>
           <option name="timeStamp" value="182" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/NER/main.py</url>
+          <url>file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/main.py</url>
           <line>82</line>
           <option name="timeStamp" value="183" />
         </line-breakpoint>
@@ -532,11 +630,6 @@
           <url>file://$PROJECT_DIR$/Embeddings.py</url>
           <line>203</line>
           <option name="timeStamp" value="244" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/1-ADC/Main.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="258" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -608,35 +701,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/3-LSTM-master/README.md" />
-    <entry file="file://$PROJECT_DIR$/data/SemEval2016-Task5-ABSA/SB1/REST/EN_REST_SB1_TEST.xml.A">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-47088">
-          <caret line="8" column="46" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/SemEval2016-Task5-ABSA/SB1/REST/EN_REST_SB1_TEST.xml.gold">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-89702" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/SemEval2016-Task5-ABSA/SB1/REST/EN_REST_SB1_TEST.xml.B">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-89489">
-          <caret line="13" column="44" selection-start-line="13" selection-start-column="44" selection-end-line="13" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/SemEval2016-Task5-ABSA/SB2/LAPT/ABSA16_Laptops_Train_English_SB2.xml" />
-    <entry file="file://$PROJECT_DIR$/data/SemEval2016-Task5-ABSA/SB2/REST/ABSA16_Restaurants_Train_English_SB2.xml" />
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/gensim/models/utils_any2vec.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="214" selection-start-line="214" selection-end-line="214" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/tqdm/_tqdm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -695,7 +759,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bb_twtr/bb_twr.py">
+    <entry file="file://$PROJECT_DIR$/3-Polarity/bb_twtr/bb_twr.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
@@ -856,16 +920,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TextPreprocessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="178">
@@ -886,17 +940,10 @@
     <entry file="file://$PROJECT_DIR$/Embeddings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
-          <caret line="158" column="18" lean-forward="true" selection-start-line="158" selection-start-column="18" selection-end-line="158" selection-end-column="18" />
+          <caret line="158" column="18" selection-start-line="158" selection-start-column="18" selection-end-line="158" selection-end-column="18" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -907,10 +954,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/My-Project-ACD/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="31" column="33" lean-forward="true" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/3-Polarity/effective-lstm-target-dependent-sa/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/3-Polarity/effective-lstm-target-dependent-sa/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="110">
+            <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-396" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/prepro.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3609">
+          <caret line="7" column="23" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="238" column="19" selection-start-line="238" selection-start-column="19" selection-end-line="238" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/SemEval.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="117" column="63" selection-start-line="117" selection-start-column="63" selection-end-line="117" selection-end-column="63" />
+        <state relative-caret-position="347">
+          <caret line="115" column="88" selection-start-line="115" selection-start-column="88" selection-end-line="115" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TextPreprocessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

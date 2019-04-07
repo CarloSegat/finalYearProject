@@ -4,7 +4,7 @@ from keras.callbacks import ModelCheckpoint
 from LoadSemEval2016 import get_data
 import keras as K
 from keras.layers import Dense, regularizers, Softmax
-from loss import micro_f1, cat_crossentropy_from_logit
+from metrics import micro_f1, cat_crossentropy_from_logit
 from sklearn.metrics import f1_score
 
 def get_model(sentence_embedding_length=400, number_classes=12):

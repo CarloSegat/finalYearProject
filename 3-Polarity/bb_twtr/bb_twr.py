@@ -1,10 +1,8 @@
 import collections
-import gzip
 import numpy as np
 from keras.callbacks import ModelCheckpoint
-from keras.models import Sequential, Model
-from keras.layers import Dense, Dropout, Flatten, Input, MaxPooling1D, Convolution1D, Embedding, GlobalMaxPooling1D, \
-    LSTM
+from keras.models import Model
+from keras.layers import Dense, Dropout, Input, Convolution1D, Embedding, GlobalMaxPooling1D
 from keras.layers.merge import Concatenate
 import os, sys, inspect
 from keras import optimizers, callbacks

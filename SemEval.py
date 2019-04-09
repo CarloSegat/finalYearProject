@@ -7,10 +7,11 @@ from django.utils.encoding import smart_str
 import pandas as pd
 import numpy as np
 from gensim.utils import unpickle
+from keras_preprocessing.sequence import pad_sequences
 
 from Embeddings import Komn
 from TextPreprocessor import TextPreprocessor
-from utils import dump_gzip, load_gzip, ROOT_DIR, make_tokenizer
+from utils import dump_gzip, load_gzip, ROOT_DIR, make_tokenizer, check_argument_is_numpy, pad_array
 
 TRAIN_SENTENCES = 2000
 TEST_SENTENCES = 676
@@ -62,9 +63,10 @@ class SemEvalData():
         test_sentences = self.get_test_sentences()
         return np.concatenate((train_sentences, test_sentences))
 
-    def get_data_sow_and_oneHotVector(self, embedding):
+    def get_x_sow_and_y_onehot(self, embedding):
 
         def assert_is_one_hot_vector(multiclass_label):
+            check_argument_is_numpy(multiclass_label)
             temp = multiclass_label > 1
             assert (not temp.any())
 
@@ -92,7 +94,41 @@ class SemEvalData():
             train_x_train_y_test_x_test_y.append(np.array(y, dtype=np.int32))
         return train_x_train_y_test_x_test_y
 
+    def get_x_embs_and_y_onehot(self, embedding, pad=True, pad_size=80):
 
+        def assert_is_one_hot_vector(multiclass_label):
+            check_argument_is_numpy(multiclass_label)
+            temp = multiclass_label > 1
+            assert (not temp.any())
+
+        def make_multilabel_1hot_vector(aspect_categories):
+            multiclass_label = np.zeros(12)
+            for ac in aspect_categories:
+                multiclass_label = np.add(multiclass_label, ASPECT_CATEGORIES[ac])
+            assert_is_one_hot_vector(multiclass_label)
+            return multiclass_label
+
+        train_x_train_y_test_x_test_y = []
+        for data in [self.ready_train, self.ready_test]:
+            x, y = [], []
+            for e in data.values():
+                sentence = e['sentence']
+                aspect_categories = []
+                for opinion in e['opinions']:
+                    aspect_categories.append(opinion['category'])
+                # some sentences have more opinions of the same type.
+                # Ignored and treated as one instance.
+                aspect_categories = list(set(aspect_categories))
+                sen = embedding.get_word_emb_list(sentence)
+                if len(sen) == 0:
+                    continue
+                if pad:
+                    padded = pad_array(sen, pad_size)
+                x.append(padded)
+                y.append(make_multilabel_1hot_vector(aspect_categories))
+            train_x_train_y_test_x_test_y.append(np.array(x))
+            train_x_train_y_test_x_test_y.append(np.array(y, dtype=np.int32))
+        return train_x_train_y_test_x_test_y
 
     def load_train_and_test(self):
         ''' Creates files of this format:
@@ -255,5 +291,6 @@ if __name__ == '__main__':
     s = SemEvalData()
     r = s.make_vocabulary()
     g = Komn(s.make_vocabulary())
-    xt, yt, xte, yte = s.get_data_sow_and_oneHotVector(g)
+    xt, yt, xte, yte = s.get_x_embs_and_y_onehot(g)
+    xt, yt, xte, yte = s.get_x_sow_and_y_onehot(g)
     t = 3

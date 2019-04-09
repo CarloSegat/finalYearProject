@@ -38,7 +38,7 @@ s = SemEvalData()
 # yelp 0.52
 # yelp on original ocde give 0.74 f1
 embs = Yelp(s.make_vocabulary())
-x, y, x_test, y_test = s.get_data_sow_and_oneHotVector(embs)
+x, y, x_test, y_test = s.get_x_sow_and_y_onehot(embs)
 model = get_model(sentence_embedding_length=len(x[0]))
 model.load_weights(parameters_path)
 #model.fit(x, y, batch_size=80, epochs=400, validation_split=0.15, callbacks=[checkpoint])

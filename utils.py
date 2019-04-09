@@ -37,3 +37,17 @@ def load_gzip(file):
     data = pkl.load(file)
     file.close()
     return data
+
+def check_argument_is_numpy(arg):
+    try:
+        assert (type(arg).__module__ == np.__name__)
+    except Exception:
+        raise ValueError("Argument has to be numpy array")
+
+def pad_array(arr, how_much):
+    '''Pads with zeros'''
+    p = np.zeros(len(arr[0]))
+    for i in range(how_much - len(arr)):
+        arr.append(p)
+    assert(len(arr) == how_much)
+    return arr

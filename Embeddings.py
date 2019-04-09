@@ -46,6 +46,18 @@ class Embedding():
                 pass # When we don't know the embedding for the word
         return running_sum
 
+    def get_word_emb_list(self, sentence):
+        if not isinstance(sentence, list):
+            if(isinstance(sentence, str)):
+                sentence = sentence.split(" ")
+        embs = []
+        for word in sentence:
+            try:
+                embs.append(self.word_to_emb[word])
+            except Exception:
+                pass # When we don't know the embedding for the word
+        return embs
+
     def get_word_to_emb(self):
         return self.word_to_emb
 

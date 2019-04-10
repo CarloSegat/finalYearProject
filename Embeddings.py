@@ -211,6 +211,8 @@ if __name__ == '__main__':
 
     sem = SemEvalData()
     vocabulary = sem.make_vocabulary()
+    k = Komn(vocabulary)
+    k. load_simple_words()
 
     y = Yelp(vocabulary)
     a = y.word_to_emb['tree']

@@ -1,5 +1,6 @@
 import os
 import re
+import string
 import xml
 from pathlib import Path
 from keras.utils import to_categorical
@@ -13,23 +14,25 @@ from Embeddings import Komn
 from TextPreprocessor import TextPreprocessor
 from utils import dump_gzip, load_gzip, ROOT_DIR, make_tokenizer, check_argument_is_numpy, pad_array
 
-TRAIN_SENTENCES = 2000
-TEST_SENTENCES = 676
+NO_OPINION_TRAIN = 292
+NO_OPINION_TEST = 89
+TRAIN_SENTENCES = 2000 - NO_OPINION_TRAIN
+TEST_SENTENCES = 676 - NO_OPINION_TEST
 TRAIN_OPINIONS = 2507
 TEST_OPINIONS = 859
 
-ASPECT_CATEGORIES = {'DRINKS#STYLE_OPTIONS': [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-                     'LOCATION#GENERAL': [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
-                     'AMBIENCE#GENERAL': [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                     'FOOD#PRICES': [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-                     'FOOD#QUALITY': [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-                     'RESTAURANT#PRICES': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
-                     'DRINKS#QUALITY': [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                     'DRINKS#PRICES': [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                     'FOOD#STYLE_OPTIONS': [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-                     'RESTAURANT#GENERAL': [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
-                     'SERVICE#GENERAL': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                     'RESTAURANT#MISCELLANEOUS': [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+ASPECT_CATEGORIES = {'DRINKS#STYLE_OPTIONS': [0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                     'LOCATION#GENERAL': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0],
+                     'AMBIENCE#GENERAL': [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                     'FOOD#PRICES': [0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                     'FOOD#QUALITY': [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                     'RESTAURANT#PRICES': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
+                     'DRINKS#QUALITY': [0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                     'DRINKS#PRICES': [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                     'FOOD#STYLE_OPTIONS': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                     'RESTAURANT#GENERAL': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0],
+                     'SERVICE#GENERAL': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0],
+                     'RESTAURANT#MISCELLANEOUS': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0]
                      }
 
 class SemEvalData():
@@ -94,7 +97,7 @@ class SemEvalData():
             train_x_train_y_test_x_test_y.append(np.array(y, dtype=np.int32))
         return train_x_train_y_test_x_test_y
 
-    def get_x_embs_and_y_onehot(self, embedding, pad=True, pad_size=80):
+    def get_x_embs_and_y_onehot(self, embedding, pad=True, pad_size=80, balanced_validation=False):
 
         def assert_is_one_hot_vector(multiclass_label):
             check_argument_is_numpy(multiclass_label)
@@ -134,6 +137,7 @@ class SemEvalData():
         ''' Creates files of this format:
         {sentence_id: { 'sentence':[sentence], 'opinions':[{}, {}]}'''
 
+        removed = 0
         for file_in, file_out in [(self.path_train_raw, self.path_train_ready),
                                   (self.path_test_raw, self.path_test_ready)]:
             opinion_count = 0
@@ -144,7 +148,6 @@ class SemEvalData():
                     for sentence in sentences:
                         ready[sentence.get("id")] = {}
                         this_id = sentence.get("id")
-                        this_sentence = ''
                         for data in sentence:
                             if data.tag == "text":
                                 this_sentence = data.text
@@ -161,6 +164,10 @@ class SemEvalData():
                                         'polarity': opinion.get("polarity"),
                                         'to': int(opinion.get("to")),
                                         'from': int(opinion.get("from")) })
+                        if len(ready[this_id]['opinions']) == 0:
+                            del ready[this_id] # remove sentence with no opinions
+                            removed += 1
+
             # sanity check: we got as many opinion tuples as the SemEval paper says
             assert(opinion_count == TEST_OPINIONS or opinion_count == TRAIN_OPINIONS)
             dump_gzip(ready, file_out)
@@ -168,7 +175,8 @@ class SemEvalData():
         self.ready_train = load_gzip(self.path_train_ready)
         self.ready_test = load_gzip(self.path_test_ready)
         # sanity check: we got as many sentences as the SemEval paper says
-        assert (len(self.ready_train) == TRAIN_SENTENCES and len(self.ready_test) == TEST_SENTENCES)
+        assert (len(self.ready_train) + len(self.ready_test) + removed ==
+                TEST_SENTENCES + TRAIN_SENTENCES)
 
     def get_test_sentences(self):
         s =  self.get_sentences(self.ready_test)
@@ -181,69 +189,57 @@ class SemEvalData():
         return s
 
     def get_sentences(self, data):
-        list_dictionaries = data.values()
-        sentences = [dictio['sentence'] for dictio in list_dictionaries]
+        list_dictionaries = list(data.values())
+        sentences = []
+        for d in list_dictionaries:
+            try:
+                sentences.append(['sentence'])
+            except Exception:
+                pass
         return np.array(sentences)
 
+    def prepare_file_for_Stanford_parser(self):
+        ''' Standford dependency parser wants a file where sentences are
+        separated by a full stop'''
+        sentences = self.get_all_sentences()
+        for i in range(len(sentences)):
+            if sentences[i][-1] != '.' and sentences[i][-1] != '!' \
+                    and sentences[i][-1] != '?':
+                sentences[i] = np.append(sentences[i], '.')
+        sentences = [' '.join(s) for s in sentences]
+        f = open("inputStanNLP.txt", 'w')
+        for s in sentences:
+            f.write(s)
+            f.write('\n')
+        f.close()
 
 
+    def prepare_tagged_sentences(self, path='rawTextToParse.xml'):
+        '''Takes as input a xml file containing standford annotated sentences.
+        Such file can be obtained by calling the following command:
+        java edu.stanford.nlp.pipeline.StanfordCoreNLP -annotators tokenize,ssplit,pos,depparse -file <INPUT_FILE>
 
-
-def multiHotVectors(categories , name):
-    #http://stackoverflow.com/questions/18889588/create-dummies-from-column-with-multiple-values-in-pandas
-    dummies = pd.get_dummies(categories['category'])
-    atom_col = [c for c in dummies.columns if '*' not in c]
-    for col in atom_col:
-        categories[col] = dummies[[c for c in dummies.columns if col in c]].sum(axis=1)
-
-    categories.to_csv(name+".csv")
-    return categories
-
-def multiCategoryVectors(dataset, classes=12):
-    labels = np.zeros((dataset.shape[0], classes))  # matrix of zeroes for accross all example labels
-    for i in range(dataset.shape[0]):
-        vec = dataset.values[i][2:14]
-        labels[i] = vec
-    print("Hot encoded vectors shape: ", labels.shape)
-    return labels
-
-def get_SOW(sentence, embeddings):
-    # beacuse we are summing: if word is not in embeddings we just append a vector of zeroes
-    sentence = [embeddings[w] if w in embeddings.keys()
-                else np.zeros((1, len(embeddings["tree"]))) for w in sentence]
-    running_sum = np.zeros((1, len(sentence[0])))
-    for emb in sentence:
-        running_sum = np.add(running_sum, emb)
-    return running_sum
-
-def get_data():
-    training_output_File = 'train.txt'
-    gold_output_File = 'test.txt'
-
-    train = pd.read_csv(training_output_File, header=None, delimiter="\t", quoting=3, names=['review', 'category'])
-    test = pd.read_csv(gold_output_File, header=None, delimiter="\t", quoting=3, names=['review', 'category'])
-    train = multiHotVectors(train, 'test_labels')
-    test = multiHotVectors(test, 'train_labels')
-
-    x_train = train["review"]
-    y_train = np.array(multiCategoryVectors(train, classes=12)).astype(int)
-    x_test = test["review"]
-    y_test = np.array(multiCategoryVectors(test, classes=12)).astype(int)
-
-    embs = load_gzip("Yelp_word_to_emb")
-
-    #x_train = [preprocess(s, return_list=True) for s in x_train]
-    x_train = [get_SOW(x, embs) for x in x_train]
-
-    #x_test = [preprocess(s, return_list=True) for s in x_test]
-    x_test = [get_SOW(x, embs) for x in x_test]
-    return np.squeeze(np.asarray(x_train[:])), y_train, \
-           np.squeeze(np.asarray(x_test[:])), y_test
-
-def pad_punctuation_spaces(s):
-    s = re.sub('([.,!?()])', r' \1 ', s)
-    s = re.sub('\s{2,}', ' ', s)
-    return s
+        Where input file contain all the train and test sentences, preprocessed such
+        that they always end with either . ! or ?'''
+        opinion_count = 0
+        ready = {}
+        docs = xml.etree.ElementTree.parse(path).getroot()
+        for doc in docs:
+            for sentences in doc:
+                tagged_sentences = []
+                for s in sentences:
+                    for dependencies in s:
+                        if dependencies.tag == 'dependencies':
+                            if dependencies.attrib['type'] == 'basic-dependencies':
+                                build = []
+                                for dep in dependencies:
+                                    tag = dep.attrib['type']
+                                    for e in dep:
+                                        if e.tag == 'dependent':
+                                            build.append(tag + "_" + e.text)
+                                tagged_sentences.append(build)
+        assert(len(tagged_sentences) == TRAIN_SENTENCES + TEST_SENTENCES)
+        dump_gzip(tagged_sentences, 'all_tagged_senences')
 
 def format_xml_for_NER():
 
@@ -289,6 +285,8 @@ def format_xml_for_NER():
 
 if __name__ == '__main__':
     s = SemEvalData()
+    s.prepare_tagged_sentences()
+    s.prepare_file_for_Stanford_parser()
     r = s.make_vocabulary()
     g = Komn(s.make_vocabulary())
     xt, yt, xte, yte = s.get_x_embs_and_y_onehot(g)

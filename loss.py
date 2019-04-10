@@ -1,7 +1,7 @@
 import sklearn
 from keras import backend as K
 from keras.backend import categorical_crossentropy
-
+import tensorflow as tf
 
 def weighted_categorical_crossentropy(weights):
     """
@@ -61,3 +61,12 @@ def micro_f1(y_true, y_pred):
 
 def cat_crossentropy_from_logit(target, output,):
     return categorical_crossentropy(target, output, from_logits=True)
+
+def focal_loss(y_true, y_pred):
+    gamma = 2.0
+    alpha = 0.25
+    pt_1 = tf.where(tf.equal(y_true, 1), y_pred, tf.ones_like(y_pred))
+    pt_0 = tf.where(tf.equal(y_true, 0), y_pred, tf.zeros_like(y_pred))
+    return -K.sum(alpha * K.pow(1. - pt_1, gamma)
+                  * K.log(pt_1))-K.sum((1-alpha)
+                  * K.pow( pt_0, gamma) * K.log(1. - pt_0))

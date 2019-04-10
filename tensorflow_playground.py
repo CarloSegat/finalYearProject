@@ -1,8 +1,17 @@
 import numpy as np
 import tensorflow as tf
 from keras.activations import softmax
-from tensorflow import einsum, reshape, matmul, tile, reduce_sum, transpose
+from tensorflow import einsum, reshape, matmul, tile, reduce_sum, transpose, norm
 from tensorflow.python.client import session
+import keras.backend as K
+
+def squash(vectors, axis=-1):
+    s_squared_norm = K.sum(K.square(vectors), axis, keepdims=True)
+    scale = s_squared_norm / (1 + s_squared_norm) / K.sqrt(s_squared_norm)
+    return scale * vectors
+
+def get_norm(vector):
+    return norm(vector, ord=2, axis=0)
 
 def length_vec(x):
     r = [a*a for a in x]
@@ -40,6 +49,12 @@ nlw =  tf.constant([
 t = tf.constant([0.5, 0.5, 0.5, 0.5, 0.5])
 
 with tf.Session() as sess:
+    rang = transpose(tf.range(0.0, 256.0, 1.0))
+    r = sess.run(squash(t))
+    rr = sess.run(squash(rang))
+    r = get_norm(r)
+    rr = get_norm(rr)
+
     test_weights = tf.convert_to_tensor(np.random.rand(256), dtype=tf.float32)
     test_weights = tf.stack([test_weights,tf.convert_to_tensor(np.random.rand(256), dtype=tf.float32),tf.convert_to_tensor(np.random.rand(256), dtype=tf.float32),test_weights,
               tf.convert_to_tensor(np.random.rand(256), dtype=tf.float32),tf.convert_to_tensor(np.random.rand(256), dtype=tf.float32),tf.convert_to_tensor(np.random.rand(256), dtype=tf.float32),tf.convert_to_tensor(np.random.rand(256), dtype=tf.float32),

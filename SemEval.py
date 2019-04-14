@@ -49,6 +49,8 @@ class SemEvalData():
 
         if do_files_exist(self.dependency_tagged_sentences):
             self.ready_tagged = load_gzip(self.dependency_tagged_sentences)
+            self.ready_tagged_train = self.ready_tagged[0:TRAIN_SENTENCES]
+            self.ready_tagged_test = self.ready_tagged[TRAIN_SENTENCES::]
         else:
             self.prepare_tagged_sentences()
             self.ready_tagged = load_gzip(self.dependency_tagged_sentences)
@@ -313,52 +315,40 @@ class SemEvalData():
     def get_syntax_setences_for_NER(self):
         pass
 
+    def format_xml_for_NER(self, komn):
 
+        def tag_sentences(out, sentences, sentences_with_syntax):
+            for normal, syntax in zip(sentences, sentences_with_syntax):
+                opinions = sentences[normal]['opinions']
+                tags = {}
+                for o in opinions:
+                    words = o['target'].split(' ')
+                    cat = o['category']
+                    tags[words[0]] = 'B-' + cat
+                    for w in words[1::]:
+                        tags[w] = 'I-' + cat
 
-def format_xml_for_NER():
+                sent_s = syntax[0]
+                assert (len(komn.get_syntactic_concatenation(syntax)) == len(sent_s))
+                for w in sent_s:
+                    if w in tags:
+                        out.write(w + ' ' + tags[w] + '\n')
+                    else:
+                        out.write(w + ' ' + 'O\n')
+                out.write('\n')
 
-    # train = "data/SemEval2016-Task5-ABSA/SB1/REST/ABSA16_Restaurants_Train_SB1_v2.xml"
-    # test = "data/SemEval2016-Task5-ABSA/SB1/REST/EN_REST_SB1_TEST.xml.gold"
-    # train_out = "2-NER-ABSA16_Restaurants_Train_SB1_v2.txt"
-    # test_out = "2-NER-EN_REST_SB1_TEST.xml.gold.txt"
+        train_out = "NER-ABSA-16_Restaurants_Train.txt"
+        test_out = "NER-ABSA-16_Restaurants_Test.txt"
+        out_train = open(train_out, 'w')
+        out_test = open(test_out, 'w')
+        tag_sentences(out_train, self.ready_train, self.ready_tagged_train)
+        tag_sentences(out_test, self.ready_test, self.ready_tagged_test)
 
-    train = "Aspect-Category-Detection-Model-master/Datasets/ABSA-15_Restaurants_Train_Final.xml"
-    test = "Aspect-Category-Detection-Model-master/Datasets/ABSA15_Restaurants_Test.xml"
-    train_out = "2-NER-ABSA-15_Restaurants_Train+Test_Final.txt"
-    test_out = "2-NER-ABSA-15_Restaurants_Test.txt"
-
-
-
-
-
-
-## FOR 2-NER
-'''
-   # always opinion after review text
-                            chars = 0
-                            review_text = pad_punctuation_spaces(review_text)
-                            review_text = review_text.strip()
-                            for w in review_text.split(" "):
-                                for cat, span, i in zip(categories, target_spans, range(0, len(categories))):
-                                    if chars >= span[0] and chars < span[1]:
-                                        if chars == span[0]:
-                                            myfile.write(smart_str(w + " B-" + cat + "\n"))
-                                            break
-                                        else:
-                                            myfile.write(smart_str(w + " I-" + cat + "\n"))
-                                            break
-                                    if i == len(categories) - 1:
-                                        myfile.write(smart_str(w + " O" + "\n"))
-
-                                chars += len(w)
-                                if not re.match('([.,!?()])', w):
-                                    chars += 1
-                            myfile.write("\n")
-
-'''
 
 if __name__ == '__main__':
     s = SemEvalData()
+    k = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
+    s.format_xml_for_NER(k)
     #s.prepare_tagged_sentences()
     #s.prepare_file_for_Stanford_parser()
     #s.make_syntactical_vocabulary()

@@ -36,9 +36,9 @@ class CNN_BLSTM(object):
 
     def loadData(self):
         """Load data and add character information"""
-        self.trainSentences = readfile("data/NER-ABSA16_Restaurants_Train_SB1_v2.txt")
+        self.trainSentences = readfile("data/NER-ABSA-16_Restaurants_Train.txt")
         #self.devSentences = readfile("data/dev.txt")
-        self.testSentences = readfile("data/NER-EN_REST_SB1_TEST.xml.gold.txt")
+        self.testSentences = readfile("data/NER-ABSA-16_Restaurants_Test.txt")
 
     def addCharInfo(self):
         # format: [['EU', ['E', 'U'], 'B-ORG\n'], ...]
@@ -281,3 +281,5 @@ cnn_blstm.createBatches()
 cnn_blstm.buildModel()
 cnn_blstm.train()
 cnn_blstm.writeToFile()
+
+# best: 0.6008 f1

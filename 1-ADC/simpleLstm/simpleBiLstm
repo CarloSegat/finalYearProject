@@ -1,5 +1,5 @@
 import sklearn
-
+import numpy as np
 import keras as K
 from keras import Input, metrics
 from keras.layers import Dense, Softmax, regularizers, Bidirectional, LSTM, Dropout
@@ -9,8 +9,19 @@ from SemEval import SemEvalData
 from embeddings.Embeddings import Komn
 from utils import get_early_stop_callback, split_train_x_y_and_validation
 
+def save_all(models):
+    for i, m in enumerate(models):
+        m.save("class" + str(i))
 
-def create_model(max_sentence_length, number_classes, embedding_vector_length,
+def get_all_predictions(models, x_test):
+    all_preds = np.zeros_like(y_test)
+    for i, m in enumerate(models):
+        pred = models[i].predict(x_test, batch_size=batch_size)
+        pred = pred > 0.5
+        all_preds[:, i] = np.squeeze(pred)
+        # print(sklearn.metrics.f1_score(y_test[:, i], pred))
+
+def create_model(max_sentence_length, embedding_vector_length,
                  lstm_dropout=0.2, lstm_recurrent_dropout=0.2, ):
     model = K.models.Sequential()
     lstm_units = max_sentence_length
@@ -20,10 +31,10 @@ def create_model(max_sentence_length, number_classes, embedding_vector_length,
                                  dropout=lstm_dropout,
                                  recurrent_dropout=lstm_recurrent_dropout)))
     model.add(Dropout(0.2))
-    model.add(Dense(number_classes,
-                    activation='linear',
+    model.add(Dense(1,
+                    activation='sigmoid',
                     kernel_regularizer=regularizers.l2()))
-    model.add(Softmax())
+    #model.add(Softmax())
     opti = adam(lr=0.001, clipvalue=1.0)
     model.compile(optimizer=opti, loss='binary_crossentropy')
     return model
@@ -32,18 +43,19 @@ s = SemEvalData()
 embs = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
 x_train_val, y_train_val, x_test, y_test = s.get_data_syntax_concatenation(embs)
 x_train, y_train, val = split_train_x_y_and_validation(0.2, x_train_val, y_train_val)
-model = create_model(80, 12, len(x_train_val[0][0]))
 batch_size = 128
-model.fit(x_train, y_train, batch_size=batch_size,
-          epochs=200, validation_data=val, shuffle=True,
+models = [None]*12
+for i in range(12):
+    models[i] = create_model(80, len(x_train_val[0][0]))
+    models[i].fit(x_train_val, y_train_val[:, i], batch_size=batch_size,
+          epochs=100, validation_split=0.15, shuffle=True,
           callbacks=[get_early_stop_callback()])
-pred = model.predict(x_test, batch_size=batch_size)
+pred = models[2].predict(x_test, batch_size=batch_size)
 pred = pred > 0.1
 sum(pred)
 print(sklearn.metrics.f1_score(y_test, pred, average='micro'))
 
 # f1 0.5206 binary_crossentropy, softamx, 5 epochs, batch=32
 # f1 0.6307 binary_crossentropy, softmax, 10 epochs,, batch=32
-# f1 0.67 b_c,sm, 100 epochs, batch=128, all classes predicted once
-# except 2
+# f1 0.67 b_c,sm, 100 epochs, batch=128, only 2 classes haven't been predicted ever
 # sigmoid as last layer (no osftamx) doesnt work (same class predicted)

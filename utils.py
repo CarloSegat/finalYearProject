@@ -1,4 +1,5 @@
 from math import ceil
+from pathlib import Path
 from random import shuffle
 import numpy as np
 from keras import callbacks
@@ -34,9 +35,12 @@ def check_argument_is_numpy(arg):
 
 def pad_array(arr, how_much):
     '''Pads with zeros'''
-    p = np.zeros(len(arr[0]))
+    try:
+        p = np.zeros(len(arr[0]))
+    except Exception:
+        pass
     for i in range(how_much - len(arr)):
-        arr.append(p)
+        arr = np.vstack((arr, p))
     assert(len(arr) == how_much)
     return arr
 
@@ -57,7 +61,7 @@ def split_train_x_y_and_validation(validation_size, x_train, y_train, classes=12
     for pair in d:
         put_in_validation = True
         for klass in get_classes_of_label(pair[1]):
-            if classes[klass] > how_many_of_each_class:
+            if classes[klass] >= how_many_of_each_class:
                 train_x.append(pair[0])
                 train_y.append(pair[1])
                 put_in_validation = False
@@ -80,6 +84,18 @@ def get_early_stop_callback():
                               verbose=0, mode='auto',
                               restore_best_weights=True)
 
+def do_files_exist(*files):
+    for file in files:
+        if not Path(file).is_file():
+            return False
+        else:
+            continue
+    return True
+
+def assert_is_one_hot_vector(multiclass_label):
+    check_argument_is_numpy(multiclass_label)
+    temp = multiclass_label > 1
+    assert (not temp.any())
 
 
 

@@ -42,18 +42,18 @@ class TextPreprocessor():
         preprocessed = []
         for s in sentences:
             ''' Does not deal with 'd as it is ambiguous'''
-            s = re.sub(r"won\'t", "will not", s)
-            s = re.sub(r"can\'t", "can not", s)
-            s = re.sub(r"cannot", "can not", s)
+            s = re.sub(r"[W, w]on\'t", "will not", s)
+            s = re.sub(r"[C, c]an\'t", "can not", s)
+            s = re.sub(r"[C, c]annot", "can not", s)
             s = re.sub(r"n\'t", " not", s)
             s = re.sub(r"\'re", " are", s)
-            s = re.sub(r"he\'s", "he is", s)
-            s = re.sub(r"she\'s", "she is", s)
+            s = re.sub(r"[H, h]e\'s", "he is", s)
+            s = re.sub(r"[S, s]he\'s", "she is", s)
+            s = re.sub(r"[I, i]t\'s", "it is", s)
             s = re.sub(r"\'ll", " will", s)
             s = re.sub(r"\'ve", " have", s)
             s = re.sub(r"\'m", " am", s)
-            s = re.sub(r"\'m", " am", s)
-            s = re.sub(r"didn\'t", "did not", s)
+            s = re.sub(r"[D, d]idn\'t", "did not", s)
             preprocessed.append(s)
         return np.array(preprocessed)
 

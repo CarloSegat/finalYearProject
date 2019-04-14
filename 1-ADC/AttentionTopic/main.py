@@ -1,29 +1,20 @@
-import sklearn
-
-from keras import Input, Sequential, Model, metrics
+from keras import Input,  Model, metrics
 from keras.activations import softmax
-from keras.backend import l2_normalize, dot
 from keras.engine import Layer
-from keras.initializers import glorot_uniform
-from keras.layers import Dense, Dropout, Bidirectional, GRU, Lambda, Concatenate, concatenate, Softmax
-from keras.optimizers import adam, SGD
+from keras.initializers import glorot_uniform, glorot_normal
+from keras.layers import Dense, Dropout, Bidirectional, GRU, Lambda, concatenate
+from keras.optimizers import SGD
 from keras import backend as K
-from keras.regularizers import Regularizer
-from tensorflow import multiply, add, reduce_sum, matmul, transpose, reshape, eye, norm, tile
+from tensorflow import reduce_sum, matmul, reshape, norm, tile
 import tensorflow as tf
 import numpy as np
-from Embeddings import Komn
+from embeddings.Embeddings import Yelp
 from SemEval import SemEvalData
-
-
-# Paper Parameters
-from loss import focal_loss
 from utils import split_train_x_y_and_validation, get_early_stop_callback
 
-EMB_DIMENSIONS = 300
 VALIDATION_PERCENTAGE = 0.1
 TOPICS = 11
-DROPOUT = 0.6
+DROPOUT = 0.4
 MAX_SEQUENCE_LENGTH = 80
 GRU_HIDDEN_SIZE = 128
 SIZE_OF_TOPIC_VECTOR = GRU_HIDDEN_SIZE * 2
@@ -37,23 +28,24 @@ PATIENCE = 20
 
 # My Parameters
 GRU_RECURRENT_DROPOUT = 0.3
+
 def stack(probs):
     return tf.stack(probs, axis=1)
 
 def squash(vectors, axis=-1):
+    '''Makes a vector length between 0 and 1'''
     s_squared_norm = K.sum(K.square(vectors), axis, keepdims=True)
     scale = s_squared_norm / (1 + s_squared_norm) / K.sqrt(s_squared_norm)
     return scale * vectors
 
-def binary_accuracy(y_true, y_pred):
-    r = K.print_tensor(K.round(y_pred), "ROund = ")
-    return K.mean(K.equal(y_true, r), axis=-1)
-
 def get_norm(vector):
-    n = K.print_tensor(norm(vector, ord=2, axis=1), "Norm of last vector = ")
-    return n
+    # n = K.print_tensor(norm(vector, ord=2, axis=1), "Norm of last vector = ")
+    # return n
+    return norm(vector, ord=2, axis=1)
 
 def paper_regulariser(weights):
+    '''Purpose is to make topic vectors perpendicular, i.e. their
+    dot product should be zero'''
     normalised_weights = weights / tf.sqrt(tf.reduce_sum(tf.square(weights), axis=0, keepdims=True))
     dot_prod_between_topic_matrices = tf.matmul(tf.transpose(normalised_weights), normalised_weights)
     dot_prod_between_topic_matrices = K.print_tensor(dot_prod_between_topic_matrices,
@@ -76,7 +68,7 @@ class My_Attention(Layer):
         self.batch_size = input_shape[0]
         self.kernel = self.add_weight(name='topic_vectors',
                                       shape=(256, self.topics),
-                                      initializer=glorot_uniform(),
+                                      initializer=glorot_normal(),
                                       trainable=True,
                                       regularizer=paper_regulariser)
         super(My_Attention, self).build(input_shape)  # Be sure to call this at the end
@@ -103,13 +95,13 @@ class My_Attention(Layer):
     def compute_output_shape(self, input_shape):
         return [(None, input_shape[2]) for i in range(self.topics)]
 
-def make_model():
+def make_model(EMB_DIMENSIONS=300):
     # We don't need to specify the max length of the sequence, therefore None
     sequence_input = Input(shape=(MAX_SEQUENCE_LENGTH, EMB_DIMENSIONS, ))
     m = Bidirectional(GRU(128, dropout=DROPOUT,
                           recurrent_dropout=GRU_RECURRENT_DROPOUT,
                           return_sequences=True, unroll=True,
-                          implementation=2))(sequence_input)
+                          implementation=1))(sequence_input)
     m = My_Attention()(m)
     topic_squash = []
     for i in range(TOPICS):
@@ -119,33 +111,47 @@ def make_model():
         d = Lambda(squash)(d)
         topic_squash.append(d)
     m = concatenate((topic_squash), axis=1)
-    m = Dropout(DROPOUT)(m)
     assert(m.shape[1] == NEURONS_MLP_SQUASH_1_2016 * TOPICS)
     p = []
     for i in range(TOPICS+1):
+        m = Dropout(DROPOUT)(m)
         d = Dense(NEURONS_MLP_SQUASH_2_2016, activation=None, kernel_initializer=glorot_uniform())(m)
         d = Lambda(squash)(d)
         d = Lambda(get_norm)(d)
         p.append(d)
+    #m = Concatenate(p)
     m = Lambda(stack)(p)
     model = Model(sequence_input, m)
-    opti = adam()#SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True, clipvalue=0.5)
+    opti = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True, clipvalue=0.5)
 
-    model.compile(optimizer=opti, loss='mean_squared_error', metrics=[metrics.binary_accuracy])
+    model.compile(optimizer=opti, loss='binary_crossentropy', metrics=[metrics.binary_accuracy])
     return model
 
 
 s = SemEvalData()
-embedding = Komn(s.make_vocabulary())
+#embedding = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
+embedding = Yelp(s.make_normal_vocabulary())
 x_train_val, y_train_val, x_test, y_test = s.get_x_embs_and_y_onehot(embedding)
 x_train, y_train, validation = split_train_x_y_and_validation(0.1,
                                                             x_train_val, y_train_val)
-model = make_model()
+
+weights = dict(enumerate(max(sum(y_train)) / sum(y_train)))
+model = make_model(len(x_train[0, 0, :]))
 print(model.summary())
 model.fit(x_train, y_train, batch_size=BATCH_SIZE,
-          epochs=50, validation_data=validation, callbacks=[get_early_stop_callback()])
+          epochs=50, validation_data=validation,
+          callbacks=[get_early_stop_callback()],
+          class_weight=weights
+          )
 pred_test = model.predict(x_test)
+e = 3
+same_test_twice = np.array([x_test[-1, :, :], x_test[-1, :, :]])
 #print(sklearn.metrics.f1_score(y_test, pred_test, average='micro'))
 
 # Validation_loss of 0.3 with cross entropy
 # V loss of o.15 with MSE
+
+#Komn: same predictions, always same majority class predicted
+
+# Yelp: class 5 has constant prediction score but then other class have randomly
+# higher scores; seems arbitrary:classes from 7 to 11 have higher scores

@@ -3,13 +3,16 @@ from keras.models import Model, load_model
 from keras.layers import TimeDistributed, Conv1D, Dense, Embedding, Input, Dropout, LSTM, Bidirectional, MaxPooling1D, \
     Flatten, concatenate
 from gensim.models import word2vec, KeyedVectors
-from NER.validation import compute_f1
-from NER.prepro import readfile, createBatches, createMatrices, iterate_minibatches, addCharInformation, padding
 from keras.utils import plot_model
 from keras.initializers import RandomUniform
 from keras.optimizers import SGD, Nadam
 
+from SemEval import SemEvalData
+from embeddings.Embeddings import Komn
+from prepro import readfile, addCharInformation, padding, createMatrices, createBatches, iterate_minibatches, \
+    createMatrices_syntax, iterate_minibatches_syntax
 from utils import load_gzip, dump_gzip
+from validation import compute_f1
 
 EPOCHS = 90              # paper: 80
 DROPOUT = 0.5             # paper: 0.68
@@ -33,7 +36,7 @@ class CNN_BLSTM(object):
 
     def loadData(self):
         """Load data and add character information"""
-        self.trainSentences = readfile("data/NER-ABSA16_Restaurants_Train_SB1_v2-HALF.txt")
+        self.trainSentences = readfile("data/NER-ABSA16_Restaurants_Train_SB1_v2.txt")
         #self.devSentences = readfile("data/dev.txt")
         self.testSentences = readfile("data/NER-EN_REST_SB1_TEST.xml.gold.txt")
 
@@ -46,6 +49,10 @@ class CNN_BLSTM(object):
     def embed(self):
         """Create word- and character-level embeddings"""
 
+        s = SemEvalData()
+        k = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
+        syntax_x, _, syntax_test_x, _ = s.get_data_syntax_concatenation(k)
+        # can call s.make_syntactical_vocabulary() to get unique syntactic_words
         labelSet, words = self.get_unique_labels_and_words()
 
         self.map_labels_to_indexes(labelSet)
@@ -59,12 +66,8 @@ class CNN_BLSTM(object):
         word2Idx = {}
         self.wordEmbeddings = []
 
-        #fEmbeddings = open("embeddings/glove.6B.50d.txt", encoding="utf-8")
-        fEmbeddings = load_gzip("..\data\suresh_loaded.pkl.gz")
-        embeddings = fEmbeddings['embeddings']
-        int_to_word = fEmbeddings['int_to_word']
         # loop through each word in embeddings
-        for word, vector in zip(int_to_word.values(), embeddings):
+        for word, vector in k.word_to_emb.items():
 
             if len(word2Idx) == 0:  # add padding+unknown
                 word2Idx["PADDING_TOKEN"] = len(word2Idx)
@@ -87,10 +90,13 @@ class CNN_BLSTM(object):
         for c in " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,-_()[]{}!?:;#'\"/\\%$`&=*+@^~|<>â€“™Ã©˜¦":
             self.char2Idx[c] = len(self.char2Idx)
 
+        self.train_set = padding(createMatrices_syntax(self.trainSentences, syntax_x, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
+        # self.dev_set = padding(createMatrices(self.devSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
+        self.test_set = padding(createMatrices_syntax(self.testSentences, syntax_test_x, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
+
         # format: [[wordindices], [caseindices], [padded word indices], [label indices]]
-        self.train_set = padding(createMatrices(self.trainSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
-       # self.dev_set = padding(createMatrices(self.devSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
-        self.test_set = padding(createMatrices(self.testSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
+        #  self.train_set = padding(createMatrices(self.trainSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
+        #  self.test_set = padding(createMatrices(self.testSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
 
         self.idx2Label = {v: k for k, v in self.label2Idx.items()}
 
@@ -132,6 +138,22 @@ class CNN_BLSTM(object):
             predLabels.append(pred)
         return predLabels, correctLabels
 
+    def tag_dataset_syntax(self, dataset, model):
+        """Tag data with numerical values"""
+        correctLabels = []
+        predLabels = []
+        for i, data in enumerate(dataset):
+            tokens, casing, char, labels, syntax = data
+            tokens = np.asarray([tokens])
+            casing = np.asarray([casing])
+            char = np.asarray([char])
+            syntax = np.asarray([syntax])
+            pred = model.predict([syntax, casing, char], verbose=False)[0]
+            pred = pred.argmax(axis=-1)  # Predict the classes
+            correctLabels.append(labels)
+            predLabels.append(pred)
+        return predLabels, correctLabels
+
     def buildModel(self):
         """Model layers"""
 
@@ -154,10 +176,11 @@ class CNN_BLSTM(object):
         char = Dropout(self.dropout)(char)
 
         # word-level input
-        words_input = Input(shape=(None,), dtype='int32', name='words_input')
-        words = Embedding(input_dim=self.wordEmbeddings.shape[0], output_dim=self.wordEmbeddings.shape[1],
-                          weights=[self.wordEmbeddings],
-                          trainable=False)(words_input)
+        words = Input(shape=(None, 600,), dtype='float32', name='words_input')
+        # words_input = Input(shape=(None,), dtype='int32', name='words_input')
+        # words = Embedding(input_dim=self.wordEmbeddings.shape[0], output_dim=self.wordEmbeddings.shape[1],
+        #                    weights=[self.wordEmbeddings],
+        #                    trainable=False)(words_input)
 
         # case-info input
         casing_input = Input(shape=(None,), dtype='int32', name='casing_input')
@@ -175,7 +198,8 @@ class CNN_BLSTM(object):
         output = TimeDistributed(Dense(len(self.label2Idx), activation='softmax'), name="Softmax_layer")(output)
 
         # set up model
-        self.model = Model(inputs=[words_input, casing_input, character_input], outputs=[output])
+        self.model = Model(inputs=[words, casing_input, character_input], outputs=[output])
+        #self.model = Model(inputs=[words_input, casing_input, character_input], outputs=[output])
 
         self.model.compile(loss='sparse_categorical_crossentropy', optimizer=self.optimizer)
 
@@ -193,12 +217,12 @@ class CNN_BLSTM(object):
 
         for epoch in range(self.epochs):
             print("Epoch {}/{}".format(epoch, self.epochs))
-            for i, batch in enumerate(iterate_minibatches(self.train_batch, self.train_batch_len)):
-                labels, tokens, casing, char = batch
-                self.model.train_on_batch([tokens, casing, char], labels)
+            for i, batch in enumerate(iterate_minibatches_syntax(self.train_batch, self.train_batch_len)):
+                labels, tokens, casing, char, syntax = batch
+                self.model.train_on_batch([syntax, casing, char], labels)
 
             # compute F1 scores
-            predLabels, correctLabels = self.tag_dataset(self.test_batch, self.model)
+            predLabels, correctLabels = self.tag_dataset_syntax(self.test_batch, self.model)
             pre_test, rec_test, f1_test = compute_f1(predLabels, correctLabels, self.idx2Label)
             self.f1_test_history.append(f1_test)
             print("f1 test ", round(f1_test, 4))

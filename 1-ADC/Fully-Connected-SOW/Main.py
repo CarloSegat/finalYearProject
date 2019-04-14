@@ -2,12 +2,11 @@ import sklearn
 
 from keras.callbacks import ModelCheckpoint
 
-from Embeddings import Komn, Glove, Google, Yelp
-from SemEval import get_data, SemEvalData
+from embeddings.Embeddings import Komn
+from SemEval import  SemEvalData
 import keras as K
-from keras.layers import Dense, regularizers, Softmax
-from loss import micro_f1, cat_crossentropy_from_logit
-from sklearn.metrics import f1_score
+from keras.layers import Dense, regularizers
+from loss import cat_crossentropy_from_logit
 
 
 def get_model(sentence_embedding_length=400, number_classes=12):
@@ -32,16 +31,22 @@ parameters_path = "weigths.hdf5"
 checkpoint = ModelCheckpoint(parameters_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 
 s = SemEvalData()
-#Komn 0.47
-#Google 0.49
-#embs = Glove(300, s.make_vocabulary())
-# yelp 0.52
-# yelp on original ocde give 0.74 f1
-embs = Yelp(s.make_vocabulary())
-x, y, x_test, y_test = s.get_data_sow_and_oneHotVector(embs)
-model = get_model(sentence_embedding_length=len(x[0]))
-model.load_weights(parameters_path)
-#model.fit(x, y, batch_size=80, epochs=400, validation_split=0.15, callbacks=[checkpoint])
+#Komn 0.6453 (different predictions)
+#Google 0.69 (different predictions)
+#Glove300  0.368 (same predictions)
+# yelp 0.74 (different predictions)
+
+
+embs = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
+#embs = Google(s.make_normal_vocabulary())
+#embs = Glove(300, s.make_normal_vocabulary())
+#embs = Yelp(s.make_normal_vocabulary())
+#x, y, x_test, y_test = s.get_x_sow_and_y_onehot(embs)
+x_train_val, y_train_val, x_test, y_test = s.get_data_syntax_concatenation_sow(embs)
+
+model = get_model(sentence_embedding_length=len(x_train_val[0]))
+#model.load_weights(parameters_path)
+model.fit(x_train_val, y_train_val, batch_size=80, epochs=400, validation_split=0.15, callbacks=[checkpoint])
 pred_test = model.predict(x_test, batch_size=80)
 pred_test = pred_test > threshold
 pred_test = pred_test + 0

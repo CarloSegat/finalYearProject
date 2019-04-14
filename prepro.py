@@ -85,16 +85,19 @@ def createEqualBatches(data):
     return batches, batch_len
 
 def createBatches(data):
-    l = []
+    lengths_sentences = []
     for i in data:
-        l.append(len(i[0]))
-    l = set(l)
+        lengths_sentences.append(len(i[0]))
+    lengths_sentences = set(lengths_sentences)
     batches = []
     batch_len = []
     z = 0
-    for i in l:
+    for i in lengths_sentences:
         for batch in data:
             if len(batch[0]) == i:
+                if batch[4][i+1, 0] != 0.0:
+                    print(batch[4][i+1, 0])
+                batch = [batch[0], batch[1], batch[2], batch[3], batch[4][0:i, :]]
                 batches.append(batch)
                 z += 1
         batch_len.append(z)
@@ -143,6 +146,47 @@ def createMatrices(sentences, word2Idx, label2Idx, case2Idx, char2Idx):
 
     return dataset
 
+def createMatrices_syntax(sentences, syntax_sentences, word2Idx, label2Idx, case2Idx, char2Idx):
+    assert (len(sentences) == len(syntax_sentences))
+    unknownIdx = word2Idx['UNKNOWN_TOKEN']
+    paddingIdx = word2Idx['PADDING_TOKEN']
+
+    dataset = []
+
+    wordCount = 0
+    unknownWordCount = 0
+
+    for sentence, syntax_sentence in zip(sentences, syntax_sentences):
+        wordIndices = []
+        caseIndices = []
+        charIndices = []
+        labelIndices = []
+
+
+        for word, char, label in sentence:
+            wordCount += 1
+            if word in word2Idx:
+                wordIdx = word2Idx[word]
+            elif word.lower() in word2Idx:
+                wordIdx = word2Idx[word.lower()]
+            else:
+                wordIdx = unknownIdx
+                unknownWordCount += 1
+            charIdx = []
+            for x in char:
+                try:
+                    charIdx.append(char2Idx[x])
+                except Exception:
+                    print(x)
+            # Get the label and map to int
+            wordIndices.append(wordIdx)
+            caseIndices.append(getCasing(word, case2Idx))
+            charIndices.append(charIdx)
+            labelIndices.append(label2Idx[label])
+
+        dataset.append([wordIndices, caseIndices, charIndices, labelIndices, syntax_sentence])
+
+    return dataset
 
 def iterate_minibatches(dataset, batch_len):
     start = 0
@@ -161,10 +205,32 @@ def iterate_minibatches(dataset, batch_len):
             char.append(ch)
             labels.append(l)
         
-        yield np.asarray(labels), np.asarray(tokens), np.asarray(caseing), np.asarray(char)        
+        yield np.asarray(labels), np.asarray(tokens), np.asarray(caseing), np.asarray(char)
+
+def iterate_minibatches_syntax(dataset, batch_len):
+    start = 0
+    for i in batch_len:
+        tokens = []
+        caseing = []
+        char = []
+        labels = []
+        syntax = []
+        data = dataset[start:i]
+        start = i
+        for dt in data:
+            t, c, ch, l, synt = dt
+            l = np.expand_dims(l, -1)
+            tokens.append(t)
+            caseing.append(c)
+            char.append(ch)
+            labels.append(l)
+            syntax.append(synt)
+
+        yield np.asarray(labels), np.asarray(tokens), np.asarray(caseing), \
+              np.asarray(char), np.asarray(syntax)
 
 
-# returns data with character information in format
+        # returns data with character information in format
 # [['EU', ['E', 'U'], 'B-ORG\n'], ...]
 def addCharInformation(Sentences):
     for i, sentence in enumerate(Sentences):

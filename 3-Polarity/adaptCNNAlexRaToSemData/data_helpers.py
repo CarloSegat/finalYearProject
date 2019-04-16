@@ -2,7 +2,6 @@ import numpy as np
 import re
 import itertools
 from collections import Counter
-import pdb
 
 """
 Original taken from https://github.com/dennybritz/cnn-text-classification-tf
@@ -67,18 +66,17 @@ def pad_sentences(sentences, padding_word="<PAD/>"):
 
 
 def build_vocab(sentences):
-	"""
-	Builds a vocabulary mapping from word to index based on the sentences.
-	Returns vocabulary mapping and inverse vocabulary mapping.
-	"""
-	# Build vocabulary
-	word_counts = Counter(itertools.chain(*sentences))
-	pdb.set_trace()
-	# Mapping from index to word
-	vocabulary_inv = [x[0] for x in word_counts.most_common()]
-	# Mapping from word to index
-	vocabulary = {x: i for i, x in enumerate(vocabulary_inv)}
-	return [vocabulary, vocabulary_inv]
+    """
+    Builds a vocabulary mapping from word to index based on the sentences.
+    Returns vocabulary mapping and inverse vocabulary mapping.
+    """
+    # Build vocabulary
+    word_counts = Counter(itertools.chain(*sentences))
+    # Mapping from index to word
+    vocabulary_inv = [x[0] for x in word_counts.most_common()]
+    # Mapping from word to index
+    vocabulary = {x: i for i, x in enumerate(vocabulary_inv)}
+    return [vocabulary, vocabulary_inv]
 
 
 def build_input_data(sentences, labels, vocabulary):

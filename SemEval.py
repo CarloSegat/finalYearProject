@@ -1,10 +1,10 @@
 import xml
 import numpy as np
+from keras_preprocessing.sequence import pad_sequences
 
 from embeddings.Embeddings import Komn
 from TextPreprocessor import TextPreprocessor
-from utils import dump_gzip, load_gzip, ROOT_DIR, check_argument_is_numpy, pad_array, do_files_exist, \
-    assert_is_one_hot_vector
+from utils import dump_gzip, load_gzip, ROOT_DIR, check_argument_is_numpy, pad_array, do_files_exist
 
 NO_OPINION_TRAIN = 292
 NO_OPINION_TEST = 89
@@ -56,37 +56,12 @@ class SemEvalData():
             self.ready_tagged = load_gzip(self.dependency_tagged_sentences)
 
     def get_all_sentences(self):
+        '''List of strings'''
         train_sentences = self.get_train_sentences()
         test_sentences = self.get_test_sentences()
-        return np.concatenate((train_sentences, test_sentences))
+        return np.squeeze(np.concatenate((train_sentences, test_sentences)))
 
 
-    def get_train_x_y_test_x_y(self, preprocessing_options=None):
-        #TODO right now a string is returned as train x,
-        # change that but add the preprocessing option
-        train_x_train_y_test_x_test_y = []
-        for data in [self.ready_train, self.ready_test]:
-            x, y = [], []
-            for e in data.values():
-                sentence = e['sentence']
-                aspect_categories = []
-                for opinion in e['opinions']:
-                    aspect_categories.append(opinion['category'])
-                # some sentences have more opinions of the same type.
-                # Ignored and treated as one instance.
-                aspect_categories = list(set(aspect_categories))
-                x.append(sentence)
-                y.append(np.array(aspect_categories))
-            train_x_train_y_test_x_test_y.append(np.array(x))
-            train_x_train_y_test_x_test_y.append(np.array(y))
-        return train_x_train_y_test_x_test_y
-
-    def make_multilabel_1hot_vector(self, aspect_categories):
-        multiclass_label = np.zeros(12)
-        for ac in aspect_categories:
-            multiclass_label = np.add(multiclass_label, ASPECT_CATEGORIES[ac])
-        assert_is_one_hot_vector(multiclass_label)
-        return multiclass_label
 
     def get_y_train_and_test_multilabel(self):
         raw = self.get_train_x_y_test_x_y()
@@ -99,7 +74,9 @@ class SemEvalData():
         raw = self.get_train_x_y_test_x_y()
         x_train = [embedding.get_SOW(s) for s in raw[0]]
         x_test = [embedding.get_SOW(s) for s in raw[2]]
-        return x_train, y_train, x_test, y_test
+        return np.array(x_train), y_train, np.array(x_test), y_test
+
+
 
     def get_x_embs_and_y_onehot(self, embedding, pad=True, pad_size=80):
 
@@ -274,15 +251,16 @@ class SemEvalData():
 
     def make_normal_vocabulary(self):
         ''' List of words used '''
-        return self.make_vocabulary(self.get_all_sentences())
+        d = []
+        for e in self.ready_tagged:
+            d.append(e[0])
+        return self.make_vocabulary(d)
 
     def make_syntactical_vocabulary(self):
         '''Returns stuff like [case_of, det_the ... ] for all words and all
         different syntactical usages found in train + test data'''
-
-        s = load_gzip(ROOT_DIR + '/data/all_tagged_sentences')
         d = []
-        for e in s:
+        for e in self.ready_tagged:
             d.append(e[0])
             for ws in list(e[1].values()):
                 d.append(ws)
@@ -293,24 +271,25 @@ class SemEvalData():
         x_train = [np.array(sum(e)) for e in x_train]
         x_test = [np.array(sum(e)) for e in x_test]
         y_train, y_test = self.get_y_train_and_test_multilabel()
-        return x_train, y_train, x_test, y_test
+        return np.array(x_train), y_train, np.array(x_test), y_test
 
-    def get_data_syntax_concatenation(self, komn):
-        x_test, x_train = self.get_x_train_test_syntax(komn, pad=True)
-        y_train, y_test = self.get_y_train_and_test_multilabel()
-        return x_train, y_train, x_test, y_test
 
-    def get_x_train_test_syntax(self, komn, pad=False):
+
+
+
+    def get_x_train_test_syntax_for_polarity(self, komn, pad=True):
         x_train, x_test = [], []
         for i in range(len(self.ready_tagged)):
             sc = komn.get_syntactic_concatenation(self.ready_tagged[i])
             if pad:
                 sc = pad_array(sc, 80)
             if i < TRAIN_SENTENCES:
-                x_train.append(sc)
+                for op in list(self.ready_train.values())[i]['opinions']:
+                    x_train.append(sc)
             else:
-                x_test.append(sc)
-        return np.array(x_test), np.array(x_train)
+                for op in list(self.ready_test.values())[i-TRAIN_SENTENCES]['opinions']:
+                    x_test.append(sc)
+        return np.array(x_train), np.array(x_test)
 
     def get_syntax_setences_for_NER(self):
         pass
@@ -344,11 +323,65 @@ class SemEvalData():
         tag_sentences(out_train, self.ready_train, self.ready_tagged_train)
         tag_sentences(out_test, self.ready_test, self.ready_tagged_test)
 
+    def get_data_as_integers_and_emb_weights_polarity(self, embbedings):
+        '''Returns sentences converted using word indices and also the
+        weights to put intot he embedding layer to get the conversion'''
+
+        def map_sentences_to_cat(output, trained_tagged, trained_normal, word_to_int):
+            for x, xx in zip(trained_tagged, trained_normal):
+                build = []
+                for w in x[0]:
+                    build.append(word_to_int[w])
+                for opinion in trained_normal[xx]['opinions']:
+                    cat = ASPECT_CATEGORIES[opinion['category']]
+                    cat = np.where(cat)[0][0]
+                    output[0].append(build)
+                    output[1].append(cat)
+            output[0] = pad_sequences(output[0], maxlen=80)
+            output[1] = np.array(output[1])
+
+        word_to_int = {v:k for k, v in enumerate(self.make_normal_vocabulary())}
+        int_to_word = {k: v for k, v in enumerate(self.make_normal_vocabulary())}
+        X_train = [[],[]]
+        X_test = [[],[]]
+        Y_train , Y_test = self.get_y_train_test_polarity()
+        map_sentences_to_cat(X_train, self.ready_tagged_train, self.ready_train, word_to_int)
+        map_sentences_to_cat(X_test, self.ready_tagged_test, self.ready_test, word_to_int)
+
+        assert(len(X_train[0]) == len(X_train[1]) == len(Y_train) == TRAIN_OPINIONS)
+        assert (len(X_test[0]) == len(X_test[1]) == len(Y_test) == TEST_OPINIONS)
+
+        weights = []
+        for i in range(len(int_to_word)):
+            try:
+                weights.append(embbedings.word_to_emb[int_to_word[i]])
+            except Exception:
+                weights.append(embbedings.default_emb)
+        return X_train, Y_train, X_test, Y_test, np.array(weights)
+
+
+
+    def get_y_train_test_polarity(self):
+        p = {'positive': [1,0,0], 'neutral': [0,1,0], 'negative': [0,0,1]}
+        Y_train, Y_test = [], []
+        for s in self.ready_train:
+            for opinion in self.ready_train[s]['opinions']:
+                Y_train.append(p[opinion['polarity']])
+        for s in self.ready_test:
+            for opinion in self.ready_test[s]['opinions']:
+                Y_test.append(p[opinion['polarity']])
+        return np.array(Y_train), np.array(Y_test)
+
+
+
 
 if __name__ == '__main__':
     s = SemEvalData()
     k = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
-    s.format_xml_for_NER(k)
+    #tt = s.make_syntactical_vocabulary()
+    a,b,c,d =s.get_x_train_test_syntax_for_polarity(k)
+    s.get_syntax_data_as_integers_and_emb_weights(k)
+
     #s.prepare_tagged_sentences()
     #s.prepare_file_for_Stanford_parser()
     #s.make_syntactical_vocabulary()

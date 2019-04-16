@@ -1,13 +1,13 @@
 import sklearn
-
 from keras.callbacks import ModelCheckpoint
-
 from embeddings.Embeddings import Komn
 from SemEval import  SemEvalData
 import keras as K
 from keras.layers import Dense, regularizers
 from loss import cat_crossentropy_from_logit
-
+from sklearn.metrics import confusion_matrix
+using_syntax = True
+epochs = 1
 
 def get_model(sentence_embedding_length=400, number_classes=12):
     model = K.models.Sequential()
@@ -26,6 +26,7 @@ def get_model(sentence_embedding_length=400, number_classes=12):
     model.compile(optimizer=opti, loss=cat_crossentropy_from_logit, metrics=[])
     print(model.summary())
     return model
+
 threshold = 0.785
 parameters_path = "weigths.hdf5"
 checkpoint = ModelCheckpoint(parameters_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
@@ -41,14 +42,16 @@ embs = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
 #embs = Google(s.make_normal_vocabulary())
 #embs = Glove(300, s.make_normal_vocabulary())
 #embs = Yelp(s.make_normal_vocabulary())
-#x, y, x_test, y_test = s.get_x_sow_and_y_onehot(embs)
-x_train_val, y_train_val, x_test, y_test = s.get_data_syntax_concatenation_sow(embs)
 
+if using_syntax:
+    x_train_val, y_train_val, x_test, y_test = s.get_data_syntax_concatenation_sow(embs)
+else:
+    x_train_val, y_train_val, x_test, y_test = s.get_x_sow_and_y_onehot(embs)
 model = get_model(sentence_embedding_length=len(x_train_val[0]))
-#model.load_weights(parameters_path)
-model.fit(x_train_val, y_train_val, batch_size=80, epochs=400, validation_split=0.15, callbacks=[checkpoint])
+
+model.fit(x_train_val, y_train_val, batch_size=80, epochs=epochs, validation_split=0.15, callbacks=[checkpoint])
+
 pred_test = model.predict(x_test, batch_size=80)
 pred_test = pred_test > threshold
 pred_test = pred_test + 0
-#print(sklearn.metrics.f1_score(y, pred, average='micro'))
 print(sklearn.metrics.f1_score(y_test, pred_test, average='micro'))

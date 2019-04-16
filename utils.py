@@ -92,11 +92,10 @@ def do_files_exist(*files):
             continue
     return True
 
-def assert_is_one_hot_vector(multiclass_label):
-    check_argument_is_numpy(multiclass_label)
-    temp = multiclass_label > 1
-    assert (not temp.any())
-
+def my_f1_binary(conf_matrix):
+    precision = conf_matrix[0][0] / (conf_matrix[0][0] + conf_matrix[1][0])
+    recall = conf_matrix[0][0] / (conf_matrix[0][0] + conf_matrix[0][1])
+    return 2 * recall * precision / (precision + recall)
 
 
 

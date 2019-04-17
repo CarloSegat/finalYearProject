@@ -2,32 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="717dfd74-d65c-4337-b7c6-22250019a2fc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/1-ADC/FF-ACD/weigths.hdf5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/1-ADC/LSTM-ACD/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/2-NER/FF-NER/Main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/3-Polarity/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ACDData.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NERData.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PolarityData.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2-NER/GRU-NER/30_0.5_0.25_200_3_0.0105_Nadam.h5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2-NER/GRU-NER/30_0.5_0.25_200_3_0.0105_Nadam.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2-NER/GRU-NER/90_0.5_0.25_275_3_0.0105_Nadam.h5" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2-NER/GRU-NER/90_0.5_0.25_275_3_0.0105_Nadam.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2-NER/GRU-NER/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/2-NER/GRU-NER/model.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/3-Polarity/CNN-Polarity/main" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/3-Polarity/FF-Polarity/Main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/3-Polarity/FF-Polarity/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/3-Polarity/FF-Polarity/weigths.hdf5" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/finalYearProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/finalYearProject.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-ADC/AttentionTopicWithoutAttention/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-ADC/AttentionTopicWithoutAttention/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/weigths.hdf5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-ADC/simpleLstm/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/FF-ACD/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-ADC/simpleLstm/simpleBiLstm" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/model.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/data_helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/data_helpers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3-Polarity/effective-lstm-target-dependent-sa/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/3-Polarity/effective-lstm-target-dependent-sa/model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-ADC/FF-ACD/weigths.hdf5" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/FF-ACD/weigths.hdf5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2-NER/FF-NER/Main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/CNN-Polarity/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/CNN-Polarity/adapted_sentiment_cnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/data_helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/CNN-Polarity/data_helpers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/models/300features_1minwords_10context" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/CNN-Polarity/models/300features_1minwords_10context" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/models/50features_1minwords_10context" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/CNN-Polarity/models/50features_1minwords_10context" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/w2v.py" beforeDir="false" afterPath="$PROJECT_DIR$/3-Polarity/CNN-Polarity/w2v.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ACDData.py" beforeDir="false" afterPath="$PROJECT_DIR$/ACDData.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NERData.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PolarityData.py" beforeDir="false" afterPath="$PROJECT_DIR$/PolarityData.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SemEval.py" beforeDir="false" afterPath="$PROJECT_DIR$/SemEval.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,10 +39,64 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/2-NER/FF-NER/Main.py">
+        <entry file="file://$PROJECT_DIR$/3-Polarity/CNN-Polarity/main">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            <state relative-caret-position="154">
+              <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/engine/training_utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="179">
+              <caret line="127" selection-start-line="127" selection-end-line="127" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PolarityData.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="59" column="40" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/embeddings/Embeddings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-19">
+              <caret line="136" column="8" selection-start-line="136" selection-start-column="8" selection-end-line="136" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/3-Polarity/FF-Polarity/Main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="84" column="11" lean-forward="true" selection-start-line="84" selection-start-column="11" selection-end-line="84" selection-end-column="11" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -60,7 +115,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>numpy</find>
       <find>Prin</find>
       <find>cli</find>
       <find>like uni</find>
@@ -90,6 +144,7 @@
       <find>w</find>
       <find>asse</find>
       <find>lstm</find>
+      <find>lst</find>
     </findStrings>
     <replaceStrings>
       <replace>'</replace>
@@ -109,11 +164,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/NER/prepro.py" />
-        <option value="$PROJECT_DIR$/NER-bilstm/main.py" />
-        <option value="$PROJECT_DIR$/NER/main.py" />
-        <option value="$PROJECT_DIR$/NlpNer/main.py" />
-        <option value="$PROJECT_DIR$/metrics.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/LoadSemEval2016.py" />
         <option value="$PROJECT_DIR$/embeddings/yelp/README" />
@@ -148,18 +198,23 @@
         <option value="$PROJECT_DIR$/tensorflow_playground.py" />
         <option value="$PROJECT_DIR$/3-Polarity/atae.py" />
         <option value="$PROJECT_DIR$/1-ADC/Fully-Connected-SOW/Main.py" />
-        <option value="$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py" />
-        <option value="$PROJECT_DIR$/PolarityData.py" />
-        <option value="$PROJECT_DIR$/SemEval.py" />
         <option value="$PROJECT_DIR$/1-ADC/simpleLstm/simpleBiLstm" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm" />
-        <option value="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" />
-        <option value="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" />
         <option value="$PROJECT_DIR$/NERData.py" />
-        <option value="$PROJECT_DIR$/ACDData.py" />
-        <option value="$PROJECT_DIR$/2-NER/LSTM-NER/main.py" />
         <option value="$PROJECT_DIR$/2-NER/CNN-NER/main.py" />
+        <option value="$PROJECT_DIR$/2-NER/FF-NER/Main.py" />
+        <option value="$PROJECT_DIR$/2-NER/GRU-NER/main.py" />
+        <option value="$PROJECT_DIR$/2-NER/LSTM-NER/main.py" />
+        <option value="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" />
+        <option value="$PROJECT_DIR$/ACDData.py" />
+        <option value="$PROJECT_DIR$/3-Polarity/CNN-Polarity/adapted_sentiment_cnn.py" />
+        <option value="$PROJECT_DIR$/SemEval.py" />
+        <option value="$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py" />
+        <option value="$PROJECT_DIR$/3-Polarity/FF-Polarity/Main.py" />
+        <option value="$PROJECT_DIR$/PolarityData.py" />
+        <option value="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" />
+        <option value="$PROJECT_DIR$/3-Polarity/CNN-Polarity/main" />
       </list>
     </option>
   </component>
@@ -174,28 +229,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
-              <item name="2-NER" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
-              <item name="2-NER" type="462c0819:PsiDirectoryNode" />
-              <item name="FF-NER" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
           <expand>
@@ -212,6 +245,50 @@
               <item name="finalYearProject" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="data" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="1-ADC" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="1-ADC" type="462c0819:PsiDirectoryNode" />
+              <item name="CNN-ADC" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="3-Polarity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="3-Polarity" type="462c0819:PsiDirectoryNode" />
+              <item name="CNN-Polarity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="3-Polarity" type="462c0819:PsiDirectoryNode" />
+              <item name="FF-Polarity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="embeddings" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -234,19 +311,19 @@
     </option>
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\finalYearProject\3-Polarity" />
+      <recent name="D:\finalYearProject\2-NER" />
+      <recent name="D:\finalYearProject\2-NER\FF-NER" />
+      <recent name="D:\finalYearProject\3-Polarity\TD-LSTM-master" />
+      <recent name="D:\finalYearProject\3-Polarity\adaptCNNAlexRaToSemData" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\finalYearProject\2-NER\FF-NER" />
       <recent name="D:\finalYearProject\3-Polarity\ATAE-LSTM" />
       <recent name="D:\finalYearProject\3-Polarity\atae-lstm" />
       <recent name="D:\finalYearProject\3-Polarity" />
       <recent name="D:\finalYearProject\2-NER\BLSTM-CNN-CHARINFO\data" />
-      <recent name="D:\finalYearProject" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\finalYearProject\2-NER\FF-NER" />
-      <recent name="D:\finalYearProject\2-NER" />
-      <recent name="D:\finalYearProject\3-Polarity\TD-LSTM-master" />
-      <recent name="D:\finalYearProject\3-Polarity" />
-      <recent name="D:\finalYearProject\3-Polarity\adaptCNNAlexRaToSemData" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -261,7 +338,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main (1)">
+  <component name="RunManager" selected="Python.main">
     <configuration name="MAIN" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="finalYearProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -283,7 +360,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="finalYearProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -291,11 +368,53 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2-NER/CNN-NER" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/3-Polarity/FF-Polarity" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2-NER/CNN-NER/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/3-Polarity/FF-Polarity/Main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="PolarityData" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="finalYearProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/PolarityData.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="atae" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="finalYearProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/3-Polarity/ATAE-LSTM" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -312,53 +431,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2-NER/LSTM-NER" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/3-Polarity/CNN-Polarity" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2-NER/LSTM-NER/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="simpleBiLstm (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="finalYearProject" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/1-ADC/LSTM-ACD" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="simpleBiLstm" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="finalYearProject" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/1-ADC/simpleLstm" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/1-ADC/simpleLstm/simpleBiLstm" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/3-Polarity/CNN-Polarity/main" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -369,11 +446,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main (1)" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.MAIN" />
-        <item itemvalue="Python.simpleBiLstm (1)" />
-        <item itemvalue="Python.simpleBiLstm" />
+        <item itemvalue="Python.atae" />
+        <item itemvalue="Python.Main (1)" />
+        <item itemvalue="Python.PolarityData" />
       </list>
     </recent_temporary>
   </component>
@@ -472,7 +549,14 @@
       <option name="project" value="LOCAL" />
       <updated>1554936372377</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Fixed softmax">
+      <created>1555445903930</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1555445903930</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -488,7 +572,7 @@
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8165289" visible="true" weight="0.26868045" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8165289" weight="0.26868045" />
       <window_info id="Structure" order="1" sideWeight="0.18347107" side_tool="true" weight="0.3100159" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32949308" />
@@ -497,7 +581,7 @@
       <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49523053" weight="0.2546083" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.49125597" visible="true" weight="0.35023043" />
+      <window_info active="true" anchor="bottom" id="Debug" order="6" sideWeight="0.49125597" visible="true" weight="0.5483871" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.11751152" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49920508" weight="0.31797236" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50874406" side_tool="true" weight="0.35023043" />
@@ -508,7 +592,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8165289" weight="0.26868045" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.8165289" visible="true" weight="0.26868045" />
       <window_info id="Structure" order="1" sideWeight="0.18347107" side_tool="true" weight="0.3100159" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32949308" />
@@ -517,7 +601,7 @@
       <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49523053" weight="0.2546083" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="Debug" order="6" sideWeight="0.49125597" visible="true" weight="0.35023043" />
+      <window_info active="true" anchor="bottom" id="Debug" order="6" sideWeight="0.49125597" visible="true" weight="0.54953915" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.11751152" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49920508" weight="0.31797236" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50874406" side_tool="true" weight="0.35023043" />
@@ -599,11 +683,11 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SemEval.py</url>
-          <line>387</line>
+          <line>379</line>
           <option name="timeStamp" value="513" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py</url>
+          <url>file://$PROJECT_DIR$/3-Polarity/CNN-Polarity/adapted_sentiment_cnn.py</url>
           <line>95</line>
           <option name="timeStamp" value="538" />
         </line-breakpoint>
@@ -624,7 +708,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/SemEval.py</url>
-          <line>382</line>
+          <line>374</line>
           <option name="timeStamp" value="586" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -644,7 +728,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/1-ADC/FF-ACD/Main.py</url>
-          <line>53</line>
+          <line>55</line>
           <option name="timeStamp" value="619" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -654,13 +738,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/1-ADC/FF-ACD/Main.py</url>
-          <line>46</line>
+          <line>48</line>
           <option name="timeStamp" value="626" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm</url>
           <line>78</line>
           <option name="timeStamp" value="643" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/2-NER/LSTM-NER/main.py</url>
+          <line>105</line>
+          <option name="timeStamp" value="645" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/3-Polarity/FF-Polarity/Main.py</url>
+          <line>50</line>
+          <option name="timeStamp" value="679" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py</url>
+          <line>81</line>
+          <option name="timeStamp" value="686" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -724,12 +823,47 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>batch[4]</expression-string>
+        <expression-string>model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>syntax_test_x[0]</expression-string>
+        <expression-string>x[0]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>np.transpose(embs.get_SOW(self.ready_tagged[i][0]))</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>embs.get_SOW(self.ready_tagged[i][0])</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>syntax_sow_train[1]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>syntax_sow_train[0]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>polarity.get_x_train_test_polarity_sow(embs)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>print(sklearn.metrics.f1_score(y_test, pred_test, average='micro'))</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>sum(pred_test)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -738,81 +872,9 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>print(sklearn.metrics.f1_score(y_test, pred_test, average=None))</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>conv</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>print(model.summary())</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>y_train_val</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>x_train_val[0]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>self.ready_tagged[i]</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/3-Polarity/ATAE-LSTM/ABSAKerasMaster/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3-Polarity/ATAE-LSTM/ABSAKerasMaster/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="21" column="10" lean-forward="true" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3-Polarity/ATAE-LSTM/ABSAKerasMaster/custom_layers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-217">
-          <caret line="44" column="8" selection-start-line="44" selection-start-column="8" selection-end-line="44" selection-end-column="8" />
-          <folding>
-            <element signature="e#145#168#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/numpy/lib/npyio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="394" column="32" selection-start-line="394" selection-start-column="32" selection-end-line="394" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tensorflow_playground.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/-2023889882/numpy/core/multiarray.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
@@ -830,19 +892,8 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/engine/training_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-811">
-          <caret line="236" selection-start-line="236" selection-end-line="236" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO-SYNTAX/data/NER-ABSA-16_Restaurants_Test.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO-SYNTAX/data/NER-ABSA-16_Restaurants_Train.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO-SYNTAX/data/NER-ABSA-16_Restaurants_Test.txt" />
+    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO-SYNTAX/data/NER-ABSA-16_Restaurants_Train.txt" />
     <entry file="file://$PROJECT_DIR$/3-Polarity/ATAE-LSTM/ABSAKerasMaster/train.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -857,48 +908,8 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/AttentionTopic/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="148" selection-start-line="148" selection-end-line="149" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO-SYNTAX/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="280" selection-start-line="280" selection-end-line="280" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/AttentionTopicWithoutAttention/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-140">
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/embeddings/Embeddings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="148" column="20" lean-forward="true" selection-start-line="148" selection-start-column="20" selection-end-line="148" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PolarityData.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO-SYNTAX/main.py" />
+    <entry file="file://$PROJECT_DIR$/1-ADC/AttentionTopicWithoutAttention/main.py" />
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -920,16 +931,6 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SemEval.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="277" selection-start-line="277" selection-end-line="277" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras_preprocessing/sequence.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -940,44 +941,10 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
     <entry file="file://$PROJECT_DIR$/1-ADC/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/adapted_sentiment_cnn.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
-          <folding>
-            <element signature="e#846#864#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/layers/core.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="707">
-          <caret line="166" column="8" selection-start-line="166" selection-start-column="8" selection-end-line="166" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/engine/base_layer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="839">
           <caret line="284" selection-start-line="284" selection-end-line="284" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/layers/embeddings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="839">
-          <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -1002,65 +969,14 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="305" column="19" lean-forward="true" selection-start-line="305" selection-start-column="19" selection-end-line="305" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/model.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/data/NER-ABSA-16_Restaurants_Train.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/NERData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="39" lean-forward="true" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/activateEnv.old.bat">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/layers/merge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="648" selection-start-line="648" selection-end-line="648" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="47" column="43" lean-forward="true" selection-start-line="46" selection-start-column="4" selection-end-line="47" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/FF-ACD/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-44">
-          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ACDData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="67" column="28" selection-start-line="67" selection-start-column="28" selection-end-line="67" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/tensorflow/python/framework/ops.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1069,46 +985,7 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/CNN-NER/data/dev.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="204" column="14" selection-start-line="204" selection-start-column="14" selection-end-line="204" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prepro.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="339">
-          <caret line="97" selection-start-line="97" selection-end-line="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="44" selection-start-line="44" selection-end-line="44" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="46" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/CNN-NER/data/dev.txt" />
     <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/sklearn/metrics/classification.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="199">
@@ -1116,9 +993,7 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/CNN-NER/model.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/CNN-NER/model.png" />
     <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/layers/wrappers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="179">
@@ -1126,22 +1001,213 @@ print(sklearn.metrics.f1_score(y_test[:, 2], pred, average='binary'))</expressio
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/CNN-NER/main.py">
+    <entry file="file://$PROJECT_DIR$/2-NER/CNN-NER/main.py" />
+    <entry file="file://$PROJECT_DIR$/2-NER/FF-NER/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="97" column="23" lean-forward="true" selection-start-line="97" selection-start-column="23" selection-end-line="97" selection-end-column="23" />
+        <state relative-caret-position="564">
+          <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/prepro.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="220" column="20" selection-start-line="220" selection-start-column="20" selection-end-line="220" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/GRU-NER/data/dev.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NERData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/GRU-NER/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/layers/recurrent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="1579" column="8" selection-start-line="1579" selection-start-column="8" selection-end-line="1579" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="47" column="43" lean-forward="true" selection-end-line="86" selection-end-column="71" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/layers/embeddings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/layers/core.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="490" column="8" selection-start-line="490" selection-start-column="8" selection-end-line="490" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/3-Polarity/CNN-Polarity/adapted_sentiment_cnn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2584">
+          <caret line="135" column="13" selection-start-line="133" selection-end-line="147" selection-end-column="48" />
+          <folding>
+            <element signature="e#846#864#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SemEval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/AttentionTopic/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="133" column="45" selection-start-line="133" selection-start-column="45" selection-end-line="133" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/FF-ACD/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="50" column="49" selection-start-line="50" selection-start-column="49" selection-end-line="50" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ACDData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="674">
+          <caret line="86" column="12" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/layers/merge.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="361" selection-start-line="361" selection-end-line="361" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/embeddings/Embeddings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-19">
+          <caret line="136" column="8" selection-start-line="136" selection-start-column="8" selection-end-line="136" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/engine/training_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="127" selection-start-line="127" selection-end-line="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="84" column="11" lean-forward="true" selection-start-line="84" selection-start-column="11" selection-end-line="84" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/3-Polarity/FF-Polarity/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PolarityData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="59" column="40" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="40" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/FF-NER/Main.py">
+    <entry file="file://$PROJECT_DIR$/3-Polarity/CNN-Polarity/main">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" column="17" lean-forward="true" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        <state relative-caret-position="154">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>

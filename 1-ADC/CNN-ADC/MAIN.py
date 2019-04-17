@@ -9,7 +9,7 @@ from embeddings.Embeddings import Komn
 from utils import get_early_stop_callback, split_train_x_y_and_validation
 from sklearn.metrics import confusion_matrix
 
-use_syntax = False
+use_syntax = True
 epochs = 1
 
 def save_all(models):

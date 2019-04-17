@@ -1,5 +1,7 @@
 import sklearn
 from keras.callbacks import ModelCheckpoint
+
+from ACDData import ACDData
 from embeddings.Embeddings import Komn
 from SemEval import  SemEvalData
 import keras as K
@@ -31,7 +33,7 @@ threshold = 0.785
 parameters_path = "weigths.hdf5"
 checkpoint = ModelCheckpoint(parameters_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 
-s = SemEvalData()
+s = ACDData()
 #Komn 0.6453 (different predictions)
 #Google 0.69 (different predictions)
 #Glove300  0.368 (same predictions)

@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/3-Polarity" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/3-Polarity/TDLSTMmaster" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/3-Polarity/ATAE-LSTM/ABSAKerasMaster" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/3-Polarity/CNN-Polarity" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.6 (finalYearProject)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

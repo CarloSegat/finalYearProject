@@ -6,16 +6,18 @@ from keras.layers import Embedding, SpatialDropout1D, Flatten, RepeatVector, con
 import keras.backend as K
 from keras.optimizers import nadam
 import numpy as np
+
+from PolarityData import PolarityData
 from SemEval import SemEvalData
 from custom_layers import Attention
 from embeddings.Embeddings import Komn
 
-s = SemEvalData()
+s = PolarityData()
 embs = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
 x_train_val, y_train_val, x_test, y_test, w = s.get_data_as_integers_and_emb_weights_polarity(embs)
 
 
-use_syntax = False
+use_syntax = True
 MAX_LEN = 80
 if use_syntax:
     VOC_SIZE = len(w)

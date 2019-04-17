@@ -76,8 +76,6 @@ class SemEvalData():
         x_test = [embedding.get_SOW(s) for s in raw[2]]
         return np.array(x_train), y_train, np.array(x_test), y_test
 
-
-
     def get_x_embs_and_y_onehot(self, embedding, pad=True, pad_size=80):
 
         def get_embeddings(sentences):
@@ -266,12 +264,7 @@ class SemEvalData():
                 d.append(ws)
         return self.make_vocabulary(d)
 
-    def get_data_syntax_concatenation_sow(self, komn):
-        x_test, x_train = self.get_x_train_test_syntax(komn)
-        x_train = [np.array(sum(e)) for e in x_train]
-        x_test = [np.array(sum(e)) for e in x_test]
-        y_train, y_test = self.get_y_train_and_test_multilabel()
-        return np.array(x_train), y_train, np.array(x_test), y_test
+
 
 
 
@@ -291,8 +284,7 @@ class SemEvalData():
                     x_test.append(sc)
         return np.array(x_train), np.array(x_test)
 
-    def get_syntax_setences_for_NER(self):
-        pass
+
 
     def format_xml_for_NER(self, komn):
 

@@ -79,3 +79,9 @@ class ACDData(SemEvalData):
         x_train, x_test = self.get_x_train_test_syntax(komn, pad=True)
         _, y_train, _, y_test, _ = self.get_data_as_integers_and_emb_weights(komn)
         return x_train, y_train, x_test, y_test
+
+    def get_data_syntax_concatenation_sow(self, komn):
+        x_train, y_train, x_test, y_test = self.get_data_syntax_concatenation(komn)
+        x_train = [np.array(sum(e)) for e in x_train]
+        x_test = [np.array(sum(e)) for e in x_test]
+        return np.array(x_train), y_train, np.array(x_test), y_test

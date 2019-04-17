@@ -1,0 +1,69 @@
+from keras import Input, Model
+from keras.layers import Embedding, Dropout, concatenate, Convolution1D, GlobalMaxPooling1D, Dense, Flatten
+from keras.optimizers import nadam
+from PolarityData import PolarityData
+from embeddings.Embeddings import Komn
+
+# Options
+use_syntax = False
+batch_size = 64
+epochs = 1
+
+# Data
+p = PolarityData()
+
+k = Komn(p.make_normal_vocabulary(), p.make_syntactical_vocabulary())
+x_syntax_train, x_syntax_test = p.get_x_train_test_syntax_polarity(k, pad=True)
+x_syntax_train, x_syntax_test = x_syntax_train[:, :, 300:600], x_syntax_test[:, :, 300:600]
+x_train, y_train, x_test, y_test, w = p.get_data_as_integers_and_emb_weights_polarity(k)
+
+# Net
+aspect_input = Input(shape=(1,))
+asp_embedding = Embedding(input_dim=12,
+                        output_dim=12,
+                        trainable=True)(aspect_input)
+asp_embedding = Flatten()(asp_embedding)
+input_text = Input(shape=(80,))
+embs = Embedding(input_dim=len(w), output_dim=len(w[0]),
+                        trainable=False,
+                        weights=[w])(input_text)
+embs = Dropout(0.2)(embs)
+
+conv_blocks = []
+for sz in (2, 3, 5):
+    conv = Convolution1D(filters=100,
+                         kernel_size=sz,
+                         padding="valid",
+                         activation="relu",
+                         strides=1)(embs)
+    conv = GlobalMaxPooling1D()(conv)
+    conv_blocks.append(conv)
+convolu = concatenate(conv_blocks)
+lstm = Dropout(0.2)(convolu)
+
+convolu_and_aspect = concatenate([convolu, asp_embedding])
+
+if use_syntax:
+    syntax_input = Input(shape=(80, 300,))
+    embs = concatenate([embs, syntax_input])
+
+
+dense = Dense(100, activation='relu')(convolu_and_aspect)
+output = Dense(3, activation='sigmoid')(dense)
+
+if use_syntax:
+    inputs = [input_text, aspect_input, syntax_input]
+else:
+    inputs = [input_text, aspect_input]
+model = Model(inputs, output)
+
+opti = nadam()
+model.compile(loss='categorical_crossentropy', metrics=['acc'], optimizer=opti)
+
+#Train
+if use_syntax:
+    x_train.append(x_syntax_train)
+    x_test.append(x_syntax_test)
+    model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)
+else:
+    model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)

@@ -1,16 +1,12 @@
 import sklearn
 import numpy as np
 from keras import Input, Model
-from keras.layers import Dense, Softmax, regularizers, Bidirectional, LSTM, Dropout, Embedding, concatenate, \
-    Convolution1D, MaxPooling1D, Flatten, GlobalMaxPooling1D
+from keras.layers import Dense, regularizers, Dropout, Embedding, concatenate, \
+    Convolution1D, GlobalMaxPooling1D
 from keras.optimizers import adam
 from ACDData import ACDData
 from embeddings.Embeddings import Komn
-from utils import get_early_stop_callback, split_train_x_y_and_validation
-from sklearn.metrics import confusion_matrix
-
-
-
+from utils import get_early_stop_callback
 
 
 def get_all_predictions(models, x_test):

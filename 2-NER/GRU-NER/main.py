@@ -1,19 +1,16 @@
 import numpy as np
-from keras.models import Model, load_model
-from keras.layers import TimeDistributed, Conv1D, Dense, Embedding, Input, Dropout, LSTM, Bidirectional, MaxPooling1D, \
+from keras.models import Model
+from keras.layers import TimeDistributed, Conv1D, Dense, Embedding, Input, Dropout, Bidirectional, MaxPooling1D, \
     Flatten, concatenate, GRU
-from gensim.models import word2vec, KeyedVectors
 from keras.utils import plot_model
 from keras.initializers import RandomUniform
-from keras.optimizers import SGD, Nadam
+from keras.optimizers import Nadam
 
 from ACDData import ACDData
 
-from SemEval import SemEvalData
 from embeddings.Embeddings import Komn
-from prepro import readfile, addCharInformation, padding, createMatrices, createBatches, iterate_minibatches, \
-    createMatrices_syntax, iterate_minibatches_syntax
-from utils import load_gzip, dump_gzip
+from prepro import readfile, addCharInformation, padding, createBatches, createMatrices_syntax, iterate_minibatches_syntax
+from utils import dump_gzip
 from validation import compute_f1
 
 use_syntax = False

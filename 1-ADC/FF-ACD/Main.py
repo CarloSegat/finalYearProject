@@ -2,13 +2,11 @@ import random
 
 import sklearn
 import numpy as np
-from keras.optimizers import nadam
 from ACDData import ACDData
 from embeddings.Embeddings import Komn, Google, Yelp, Glove
-from SemEval import  SemEvalData
 import keras as K
 from keras.layers import Dense, regularizers
-from utils import get_early_stop_callback, dump_gzip, load_gzip
+from utils import get_early_stop_callback, dump_gzip
 
 all_scores = {'komn':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
                      'stop-removed':{'punct-kept':[], 'punct-removed':[]}},

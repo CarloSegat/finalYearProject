@@ -27,7 +27,7 @@ class ACDData(SemEvalData):
             multiclass_label = np.add(multiclass_label, ASPECT_CATEGORIES[ac])
         return multiclass_label
 
-    def get_data_as_integers_and_emb_weights(self, embbedings, pad=True):
+    def get_data_as_integers_and_emb_weights(self, embbedings, pad=True, no_stop=False, no_punct=False):
         '''Returns sentences converted using word indices and also the
         weights to put intot he embedding layer to get the conversion'''
 
@@ -35,7 +35,12 @@ class ACDData(SemEvalData):
             X, Y = [], []
             for x, xx in zip(trained_tagged, trained_normal):
                 build = []
-                for w in x[0]:
+                s = x[0]
+                if no_stop:
+                    s = self.text_preprocessor.remove_stopwords(x[0])
+                if no_punct:
+                    s = self.text_preprocessor.remove_punctuation(x[0])
+                for w in s:
                     build.append(word_to_int[w])
                 X.append(build)
 
@@ -79,6 +84,22 @@ class ACDData(SemEvalData):
         x_train, x_test = self.get_x_train_test_syntax(komn, pad=True)
         _, y_train, _, y_test, _ = self.get_data_as_integers_and_emb_weights(komn)
         return x_train, y_train, x_test, y_test
+
+    def get_normal_sentences_sow(self, embs, no_stop=False, no_punct=False):
+        x_train, x_test = [], []
+        for i in range(len(self.ready_tagged)):
+            s = self.ready_tagged[i][0]
+            if no_stop:
+                s = self.text_preprocessor.remove_stopwords(s)
+            if no_punct:
+                s = self.text_preprocessor.remove_punctuation(s)
+            if i < TRAIN_SENTENCES:
+                sow = embs.get_SOW(s)
+                x_train.append(sow)
+            else:
+                sow = embs.get_SOW(s)
+                x_test.append(sow)
+        return np.array(x_train), np.array(x_test)
 
     def get_data_syntax_concatenation_sow(self, komn):
         x_train, y_train, x_test, y_test = self.get_data_syntax_concatenation(komn)

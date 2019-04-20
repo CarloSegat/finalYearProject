@@ -9,12 +9,9 @@ from embeddings.Embeddings import Komn
 from utils import get_early_stop_callback, split_train_x_y_and_validation
 from sklearn.metrics import confusion_matrix
 
-use_syntax = True
-epochs = 1
 
-def save_all(models):
-    for i, m in enumerate(models):
-        m.save("class" + str(i))
+
+
 
 def get_all_predictions(models, x_test):
     all_preds = np.zeros_like(y_test)

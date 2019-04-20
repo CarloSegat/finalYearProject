@@ -1,8 +1,12 @@
 import re
+import string
+
 import numpy as np
 from ekphrasis.classes.preprocessor import TextPreProcessor
 from ekphrasis.classes.tokenizer import SocialTokenizer
 from ekphrasis.dicts.emoticons import emoticons
+import nltk
+from nltk.corpus import stopwords
 
 class TextPreprocessor():
 
@@ -56,6 +60,22 @@ class TextPreprocessor():
             s = re.sub(r"[D, d]idn\'t", "did not", s)
             preprocessed.append(s)
         return np.array(preprocessed)
+
+    def remove_stopwords(self, sentence):
+        assert (type(sentence).__module__ == np.__name__ or isinstance(sentence, list))
+        new_sentence = []
+        for w in sentence:
+            if w not in set(stopwords.words('english')):
+                new_sentence.append(w)
+        return np.array(new_sentence)
+
+    def remove_punctuation(self, sentence):
+        assert (type(sentence).__module__ == np.__name__ or isinstance(sentence, list))
+        new_sentence = []
+        for w in sentence:
+            if w.translate(str.maketrans('', '', string.punctuation)) != '':
+                new_sentence.append(w)
+        return np.array(new_sentence)
 
 if __name__ == '__main__':
     tp = TextPreprocessor()

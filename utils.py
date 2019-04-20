@@ -3,6 +3,7 @@ from pathlib import Path
 from random import shuffle
 import numpy as np
 from keras import callbacks
+from keras.optimizers import nadam
 from keras.preprocessing.text import Tokenizer
 import pickle as pkl
 import gzip
@@ -81,7 +82,7 @@ def get_early_stop_callback():
     return callbacks.EarlyStopping(monitor='val_loss',
                               min_delta=0,
                               patience=10,
-                              verbose=0, mode='auto',
+                              verbose=0, mode='min',
                               restore_best_weights=True)
 
 def do_files_exist(*files):
@@ -96,6 +97,4 @@ def my_f1_binary(conf_matrix):
     precision = conf_matrix[0][0] / (conf_matrix[0][0] + conf_matrix[1][0])
     recall = conf_matrix[0][0] / (conf_matrix[0][0] + conf_matrix[0][1])
     return 2 * recall * precision / (precision + recall)
-
-
 

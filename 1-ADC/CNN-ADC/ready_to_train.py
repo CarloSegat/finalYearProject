@@ -92,7 +92,6 @@ data = ACDData()
 yelp = Yelp(data.make_normal_vocabulary())
 komn = Komn(data.make_normal_vocabulary(), data.make_syntactical_vocabulary())
 google = Google(data.make_normal_vocabulary())
-glove = Glove(300, data.make_normal_vocabulary())
 
 syntax_train, y_train_val, syntax_test, y_test = data.get_data_syntax_concatenation(komn)
 syntax_train, syntax_test = syntax_train[:, :, 300:600], syntax_test[:, :, 300:600]

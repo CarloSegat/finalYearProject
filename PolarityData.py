@@ -85,16 +85,21 @@ class PolarityData(SemEvalData):
         x_test = x_test[:, 0:300]
         return np.array(x_train), np.array(x_test)
 
-    def get_normal_sentences_sow(self, embs):
+    def get_normal_sentences_sow(self, embs, no_punct=False, no_stop=False):
         x_train, x_test = [], []
         for i in range(len(self.ready_tagged)):
+            s = self.ready_tagged[i][0]
+            if no_stop:
+                s = self.text_preprocessor.remove_stopwords(s)
+            if no_punct:
+                s = self.text_preprocessor.remove_punctuation(s)
             if i < TRAIN_SENTENCES:
                 for o in list(self.ready_train.values())[i]['opinions']:
-                    sow = embs.get_SOW(self.ready_tagged[i][0])
+                    sow = embs.get_SOW(s)
                     x_train.append(sow)
             else:
                 for o in list(self.ready_test.values())[i - TRAIN_SENTENCES]['opinions']:
-                    sow = embs.get_SOW(self.ready_tagged[i][0])
+                    sow = embs.get_SOW(s)
                     x_test.append(sow)
         return np.array(x_train), np.array(x_test)
 

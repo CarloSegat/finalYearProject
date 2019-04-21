@@ -65,7 +65,7 @@ class TextPreprocessor():
         assert (type(sentence).__module__ == np.__name__ or isinstance(sentence, list))
         new_sentence = []
         for w in sentence:
-            if w not in set(stopwords.words('english')):
+            if not self.is_word_stop(w):
                 new_sentence.append(w)
         return np.array(new_sentence)
 
@@ -73,9 +73,15 @@ class TextPreprocessor():
         assert (type(sentence).__module__ == np.__name__ or isinstance(sentence, list))
         new_sentence = []
         for w in sentence:
-            if w.translate(str.maketrans('', '', string.punctuation)) != '':
+            if not self.is_word_punctuation(w):
                 new_sentence.append(w)
         return np.array(new_sentence)
+
+    def is_word_stop(self, w):
+        return w in set(stopwords.words('english'))
+
+    def is_word_punctuation(self, w):
+        return w.translate(str.maketrans('', '', string.punctuation)) == ''
 
 if __name__ == '__main__':
     tp = TextPreprocessor()

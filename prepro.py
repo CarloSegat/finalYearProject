@@ -146,7 +146,8 @@ def createMatrices(sentences, word2Idx, label2Idx, case2Idx, char2Idx):
 
     return dataset
 
-def createMatrices_syntax(sentences, syntax_sentences, word2Idx, label2Idx, case2Idx, char2Idx):
+def createMatrices_syntax(sentences, syntax_sentences, word2Idx, label2Idx,
+                          case2Idx, char2Idx, no_stop, no_punct, tp):
     assert (len(sentences) == len(syntax_sentences))
     unknownIdx = word2Idx['UNKNOWN_TOKEN']
     paddingIdx = word2Idx['PADDING_TOKEN']
@@ -164,6 +165,12 @@ def createMatrices_syntax(sentences, syntax_sentences, word2Idx, label2Idx, case
 
 
         for word, char, label in sentence:
+            if no_stop:
+                if tp.is_word_stop(word):
+                    continue
+            if no_punct:
+                if tp.is_word_punctuation(word):
+                    continue
             wordCount += 1
             if word in word2Idx:
                 wordIdx = word2Idx[word]

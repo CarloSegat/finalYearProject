@@ -1,6 +1,13 @@
+import random
+
 import numpy as np
+import sys
+
+from TextPreprocessor import TextPreprocessor
+
+sys.path.append('..\..\.')
 from keras.models import Model
-from keras.layers import TimeDistributed, Conv1D, Dense, Embedding, Input, Dropout, Bidirectional, MaxPooling1D, \
+from keras.layers import TimeDistributed, Conv1D, Dense, Embedding, Input, Dropout, LSTM, Bidirectional, MaxPooling1D, \
     Flatten, concatenate, GRU
 from keras.utils import plot_model
 from keras.initializers import RandomUniform
@@ -8,7 +15,7 @@ from keras.optimizers import Nadam
 
 from ACDData import ACDData
 
-from embeddings.Embeddings import Komn
+from embeddings.Embeddings import Komn, Yelp, Google
 from prepro import readfile, addCharInformation, padding, createBatches, createMatrices_syntax, iterate_minibatches_syntax
 from utils import dump_gzip
 from validation import compute_f1
@@ -23,6 +30,24 @@ CONV_SIZE = 3             # paper: 3
 LEARNING_RATE = 0.0105    # paper 0.0105
 OPTIMIZER = Nadam()       # paper uses SGD(lr=self.learning_rate), Nadam() recommended
 
+all_scores = {'komn':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                     'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
+             'no-synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                        'stop-removed':{'punct-kept':[], 'punct-removed':[]}}
+            },
+
+             'google':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                             'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
+                     'no-synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                                'stop-removed':{'punct-kept':[], 'punct-removed':[]}}
+                    },
+            'yelp':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                             'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
+                     'no-synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                                'stop-removed':{'punct-kept':[], 'punct-removed':[]}}
+                    }
+            }
+
 class CNN_BLSTM(object):
 
     def __init__(self, EPOCHS, DROPOUT, DROPOUT_RECURRENT, LSTM_STATE_SIZE, CONV_SIZE, LEARNING_RATE, OPTIMIZER):
@@ -34,6 +59,7 @@ class CNN_BLSTM(object):
         self.conv_size = CONV_SIZE
         self.learning_rate = LEARNING_RATE
         self.optimizer = OPTIMIZER
+        self.text_preprocessor = TextPreprocessor()
 
     def loadData(self):
         """Load data and add character information"""
@@ -47,15 +73,11 @@ class CNN_BLSTM(object):
         #self.devSentences = addCharInformation(self.devSentences)
         self.testSentences = addCharInformation(self.testSentences)
 
-    def embed(self):
+    def embed(self, syntax_x, syntax_test_x, embeddings, no_stop, no_punct):
         """Create word- and character-level embeddings"""
 
-        s = ACDData()
-        k = Komn(s.make_normal_vocabulary(), s.make_syntactical_vocabulary())
-        syntax_x, syntax_test_x = s.get_x_train_test_syntax(k, pad=True)
         # can call s.make_syntactical_vocabulary() to get unique syntactic_words
         labelSet, words = self.get_unique_labels_and_words()
-
         self.map_labels_to_indexes(labelSet)
 
         # mapping for token cases
@@ -68,7 +90,7 @@ class CNN_BLSTM(object):
         self.wordEmbeddings = []
 
         # loop through each word in embeddings
-        for word, vector in k.word_to_emb.items():
+        for word, vector in embeddings.word_to_emb.items():
 
             if len(word2Idx) == 0:  # add padding+unknown
                 word2Idx["PADDING_TOKEN"] = len(word2Idx)
@@ -91,11 +113,16 @@ class CNN_BLSTM(object):
         for c in " 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,-_()[]{}!?:;#'\"/\\%$`&=*+@^~|<>â€“™Ã©˜¦":
             self.char2Idx[c] = len(self.char2Idx)
 
-        self.train_set = padding(createMatrices_syntax(self.trainSentences, syntax_x, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
+        self.train_set = padding(createMatrices_syntax(self.trainSentences,
+                                 syntax_x, word2Idx, self.label2Idx,
+                                 case2Idx, self.char2Idx, no_stop, no_punct,
+                                 self.text_preprocessor))
         # self.dev_set = padding(createMatrices(self.devSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
-        self.test_set = padding(createMatrices_syntax(self.testSentences, syntax_test_x, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
-        dump_gzip(self.train_set, 'trainNER')
-        dump_gzip(self.test_set, 'testNER')
+        self.test_set = padding(createMatrices_syntax(self.testSentences, syntax_test_x,
+                                word2Idx, self.label2Idx, case2Idx,
+                                self.char2Idx, no_stop, no_punct,
+                                self.text_preprocessor))
+
         # format: [[wordindices], [caseindices], [padded word indices], [label indices]]
         #  self.train_set = padding(createMatrices(self.trainSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
         #  self.test_set = padding(createMatrices(self.testSentences, word2Idx, self.label2Idx, case2Idx, self.char2Idx))
@@ -162,7 +189,7 @@ class CNN_BLSTM(object):
 
     def buildModel(self):
         """Model layers"""
-
+        self.model = None
         # character input
         character_input = Input(shape=(None, 52,), name="Character_input")
         embed_char_out = TimeDistributed(
@@ -199,10 +226,10 @@ class CNN_BLSTM(object):
         # concat & BLSTM
         output = concatenate([words, casing, char])
         output = Bidirectional(GRU(self.lstm_state_size,
-                                    return_sequences=True,
-                                    dropout=self.dropout,  # on input to each LSTM block
-                                    recurrent_dropout=self.dropout_recurrent  # on recurrent input signal
-                                    ), name="BGRU")(output)
+                                   return_sequences=True,
+                                   dropout=self.dropout,  # on input to each LSTM block
+                                   recurrent_dropout=self.dropout_recurrent  # on recurrent input signal
+                                   ), name="BGRU")(output)
         output = TimeDistributed(Dense(len(self.label2Idx), activation='softmax'), name="Softmax_layer")(output)
 
         # set up model
@@ -211,22 +238,21 @@ class CNN_BLSTM(object):
             inputs.append(syntax_input)
         self.model = Model(inputs=inputs, outputs=[output])
         #self.model = Model(inputs=[words_input, casing_input, character_input], outputs=[output])
-
+        self.optimizer = 'nadam'
         self.model.compile(loss='sparse_categorical_crossentropy', optimizer=self.optimizer)
 
-        self.init_weights = self.model.get_weights()
+        #self.init_weights = self.model.get_weights()
 
-        plot_model(self.model, to_file='model.png')
+        #plot_model(self.model, to_file='model.png')
 
-        print("Model built. Saved model.png\n")
+        #print("Model built. Saved model.png\n")
 
-    def train(self):
+    def train(self, use_syntax, max_epochs):
         """Default training"""
 
         self.f1_test_history = []
-        #self.f1_dev_history = []
 
-        for epoch in range(self.epochs):
+        for epoch in range(max_epochs):
             print("Epoch {}/{}".format(epoch, self.epochs))
             for i, batch in enumerate(iterate_minibatches_syntax(self.train_batch, self.train_batch_len)):
                 labels, tokens, casing, char, syntax = batch
@@ -239,61 +265,53 @@ class CNN_BLSTM(object):
             predLabels, correctLabels = self.tag_dataset_syntax(self.test_batch, self.model)
             pre_test, rec_test, f1_test = compute_f1(predLabels, correctLabels, self.idx2Label)
             self.f1_test_history.append(f1_test)
-            print("f1 test ", round(f1_test, 4))
+
 
             # predLabels, correctLabels = self.tag_dataset(self.dev_batch, self.model)
             # pre_dev, rec_dev, f1_dev = compute_f1(predLabels, correctLabels, self.idx2Label)
             # self.f1_dev_history.append(f1_dev)
             # print("f1 dev ", round(f1_dev, 4), "\n")
 
-        print("Final F1 test score: ", f1_test)
+        return max(self.f1_test_history)
 
-        print("Training finished.")
 
-        # save model
-        self.modelName = "{}_{}_{}_{}_{}_{}_{}".format(self.epochs,
-                                                       self.dropout,
-                                                       self.dropout_recurrent,
-                                                       self.lstm_state_size,
-                                                       self.conv_size,
-                                                       self.learning_rate,
-                                                       self.optimizer.__class__.__name__
-                                                       )
-
-        modelName = self.modelName + ".h5"
-        self.model.save(modelName)
-        print("Model weights saved.")
-
-        self.model.set_weights(self.init_weights)  # clear model
-        print("Model weights cleared.")
-        print("best F1 score for test was: ", max(self.f1_test_history))
-
-    def writeToFile(self):
-        """Write output to file"""
-
-        # .txt file format
-        # [epoch  ]
-        # [f1_test]
-        # [f1_dev ]
-
-        output = np.matrix([[int(i) for i in range(self.epochs)], self.f1_test_history]) #, self.f1_dev_history
-
-        fileName = self.modelName + ".txt"
-        with open(fileName, 'wb') as f:
-            for line in output:
-                np.savetxt(f, line, fmt='%.5f')
-
-        print("Model performance written to file.")
-
-    print("Class initialised.")
 
 cnn_blstm = CNN_BLSTM(EPOCHS, DROPOUT, DROPOUT_RECURRENT, LSTM_STATE_SIZE, CONV_SIZE, LEARNING_RATE, OPTIMIZER)
 cnn_blstm.loadData()
 cnn_blstm.addCharInfo()
-cnn_blstm.embed()
-cnn_blstm.createBatches()
-cnn_blstm.buildModel()
-cnn_blstm.train()
-cnn_blstm.writeToFile()
+# cnn_blstm.embed()
+# cnn_blstm.createBatches()
+# cnn_blstm.buildModel()
+# cnn_blstm.train()
+
+data = ACDData()
+yelp = Yelp(data.make_normal_vocabulary())
+komn = Komn(data.make_normal_vocabulary(), data.make_syntactical_vocabulary())
+google = Google(data.make_normal_vocabulary())
+
+syntax_train, y_train_val, syntax_test, y_test = data.get_data_syntax_concatenation(komn)
+syntax_train, syntax_test = syntax_train[:, :, 300:600], syntax_test[:, :, 300:600]
+
+batch_sizes = [32, 64, 96]
+
+for p, punct in [(True, 'punct-removed'), (False, 'punct-kept')]:
+    print(punct)
+    for s, stop in [(True, 'stop-removed'), (False, 'stop-kept')]:
+        print(stop)
+        for embedding, emb in [(yelp, 'yelp'), (komn, 'komn'), (google, 'google')]:
+            print(emb)
+            cnn_blstm.embed(syntax_train, syntax_test, embedding, s, p)
+            cnn_blstm.createBatches()
+            for syntax, synt in [(True, 'synt'), (False, 'no-synt')]:
+                print(synt)
+                f1s = []
+                for i in range(10):
+                    batch_size = batch_sizes[random.randint(0, 2)]
+                    cnn_blstm.buildModel()
+                    f1s.append(cnn_blstm.train(synt))
+
+                all_scores[emb][synt][stop][punct] = f1s
+
+dump_gzip(all_scores, 'LSTM-ACD-Results-Yelp')
 
 # best: 0.6008 f1

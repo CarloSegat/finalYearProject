@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="717dfd74-d65c-4337-b7c6-22250019a2fc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/1-ADC/CNN-ADC/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/1-ADC/LSTM-ACD/ready_to_train.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/1-ADC/LSTM-ACD/komn_ready_to_train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/1-ADC/LSTM-ACD/yelp_ready_to_train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1-ADC/CNN-ADC/ready_to_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/CNN-ADC/ready_to_train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1-ADC/LSTM-ACD/ready_to_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/1-ADC/LSTM-ACD/google_ready_to_train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/2-NER/GRU-NER/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/2-NER/GRU-NER/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TextPreprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/TextPreprocessor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prepro.py" beforeDir="false" afterPath="$PROJECT_DIR$/prepro.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,11 +21,104 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/ready_to_train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="105" column="86" selection-start-line="105" selection-start-column="86" selection-end-line="105" selection-end-column="86" />
+            <state relative-caret-position="-382">
+              <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/google_ready_to_train.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="22">
+              <caret line="93" selection-start-line="93" selection-end-line="93" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ACDData.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="46">
+              <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#54#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/komn_ready_to_train.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="17" selection-start-line="17" selection-end-line="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/yelp_ready_to_train.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="94" selection-start-line="94" selection-end-line="97" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1403">
+              <caret line="249" column="8" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="8" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="68" column="21" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/2-NER/GRU-NER/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="316">
+              <caret line="227" column="33" selection-start-line="227" selection-start-column="33" selection-end-line="227" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TextPreprocessor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="388">
+              <caret line="75" column="19" selection-start-line="75" selection-start-column="19" selection-end-line="75" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/prepro.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="275">
+              <caret line="198" column="13" lean-forward="true" selection-start-line="198" selection-start-column="13" selection-end-line="198" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -89,9 +183,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/1-ADC/Attention-topic/main.py" />
-        <option value="$PROJECT_DIR$/1-ADC/AttentionTopic/__init__.py" />
-        <option value="$PROJECT_DIR$/1-ADC/__init__.py" />
         <option value="$PROJECT_DIR$/1-ADC/AttentionTopic/AttentionLayer" />
         <option value="$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/engine/base_layer.py" />
         <option value="$PROJECT_DIR$/matrix_multiplication_example.py" />
@@ -101,7 +192,6 @@
         <option value="$PROJECT_DIR$/1-ADC/AttentionTopic/main.py" />
         <option value="$PROJECT_DIR$/1-ADC/AttentionTopicWithoutAttention/main.py" />
         <option value="$PROJECT_DIR$/1-ADC/simpleBiLstm" />
-        <option value="$PROJECT_DIR$/prepro.py" />
         <option value="$PROJECT_DIR$/2-NER/BLSTM-CNN-CHARINFO/main.py" />
         <option value="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/__init__.py" />
         <option value="$PROJECT_DIR$/3-Polarity/adaptCNNAlexRaToSemData/data_helpers.py" />
@@ -118,28 +208,32 @@
         <option value="$PROJECT_DIR$/NERData.py" />
         <option value="$PROJECT_DIR$/2-NER/CNN-NER/main.py" />
         <option value="$PROJECT_DIR$/2-NER/FF-NER/Main.py" />
-        <option value="$PROJECT_DIR$/2-NER/GRU-NER/main.py" />
         <option value="$PROJECT_DIR$/3-Polarity/CNN-Polarity/adapted_sentiment_cnn.py" />
         <option value="$PROJECT_DIR$/SemEval.py" />
         <option value="$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py" />
         <option value="$PROJECT_DIR$/3-Polarity/FF-Polarity/Main.py" />
         <option value="$PROJECT_DIR$/PolarityData.py" />
         <option value="$PROJECT_DIR$/3-Polarity/CNN-Polarity/main" />
-        <option value="$PROJECT_DIR$/TextPreprocessor.py" />
         <option value="$PROJECT_DIR$/data/SemEval2016-Task5-ABSA/SB1/LAPT/ABSA16_Laptops_Train_SB1_v2.xml" />
-        <option value="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" />
         <option value="$PROJECT_DIR$/ACDData.py" />
         <option value="$PROJECT_DIR$/gaussian.py" />
-        <option value="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" />
-        <option value="$PROJECT_DIR$/2-NER/LSTM-NER/main.py" />
         <option value="$PROJECT_DIR$/plotting/plotter.py" />
         <option value="$PROJECT_DIR$/embeddings/Embeddings.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/1-ADC/LSTM-ACD/simpleBiLstm" />
-        <option value="$PROJECT_DIR$/1-ADC/LSTM-ACD/ready_to_train.py" />
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/../finalproj/1-ADC/CNN-ADC/ready_to_train.py" />
         <option value="$PROJECT_DIR$/1-ADC/CNN-ADC/ready_to_train.py" />
+        <option value="$PROJECT_DIR$/1-ADC/LSTM-ACD/ready_to_train.py" />
+        <option value="$PROJECT_DIR$/1-ADC/LSTM-ACD/yelp_ready_to_train.py" />
+        <option value="$PROJECT_DIR$/1-ADC/LSTM-ACD/komn_ready_to_train.py" />
+        <option value="$PROJECT_DIR$/1-ADC/LSTM-ACD/google_ready_to_train.py" />
+        <option value="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" />
+        <option value="$PROJECT_DIR$/prepro.py" />
+        <option value="$PROJECT_DIR$/TextPreprocessor.py" />
+        <option value="$PROJECT_DIR$/2-NER/LSTM-NER/main.py" />
+        <option value="$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py" />
+        <option value="$PROJECT_DIR$/2-NER/GRU-NER/main.py" />
       </list>
     </option>
   </component>
@@ -171,6 +265,23 @@
               <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
               <item name="1-ADC" type="462c0819:PsiDirectoryNode" />
               <item name="CNN-ADC" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="2-NER" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="2-NER" type="462c0819:PsiDirectoryNode" />
+              <item name="GRU-NER" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="finalYearProject" type="462c0819:PsiDirectoryNode" />
+              <item name="2-NER" type="462c0819:PsiDirectoryNode" />
+              <item name="LSTM-NER" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="finalYearProject" type="b2602c69:ProjectViewProjectNode" />
@@ -228,11 +339,11 @@
       <recent name="D:\finalYearProject\2-NER\FF-NER" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\finalYearProject\2-NER\GRU-NER" />
+      <recent name="D:\finalYearProject\1-ADC\LSTM-ACD" />
       <recent name="D:\finalYearProject\1-ADC\CNN-ADC" />
       <recent name="D:\finalYearProject" />
       <recent name="D:\finalYearProject\3-Polarity" />
-      <recent name="D:\finalYearProject\2-NER" />
-      <recent name="D:\finalYearProject\2-NER\FF-NER" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -247,7 +358,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.ready_to_train (1)">
+  <component name="RunManager" selected="Python.main">
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="finalYearProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -261,6 +372,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/1-ADC/FF-ACD/Main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="finalYearProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/2-NER/LSTM-NER" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/2-NER/LSTM-NER/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -302,7 +434,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/1-ADC/LSTM-ACD/ready_to_train.py" />
+      <option name="SCRIPT_NAME" value="D:\finalYearProject\1-ADC\LSTM-ACD\google_ready_to_train.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -334,8 +466,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.ready_to_train (1)" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.ready_to_train" />
+        <item itemvalue="Python.ready_to_train (1)" />
         <item itemvalue="Python.plotter" />
         <item itemvalue="Python.Main" />
       </list>
@@ -457,7 +590,14 @@
       <option name="project" value="LOCAL" />
       <updated>1555777165197</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="CNN-ADC ready to run">
+      <created>1555791352316</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1555791352316</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -473,13 +613,13 @@
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8165289" visible="true" weight="0.073131956" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8165289" visible="true" weight="0.23608904" />
       <window_info id="Structure" order="1" sideWeight="0.18347107" side_tool="true" weight="0.3100159" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32949308" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" sideWeight="0.49761525" weight="0.39746544" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49523053" weight="0.2546083" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49523053" visible="true" weight="0.20046084" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.49125597" weight="0.3721198" />
@@ -493,13 +633,13 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8165289" visible="true" weight="0.17170112" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8165289" visible="true" weight="0.23608904" />
       <window_info id="Structure" order="1" sideWeight="0.18347107" side_tool="true" weight="0.3100159" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32949308" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" sideWeight="0.49761525" weight="0.39746544" />
-      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49523053" weight="0.2546083" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49523053" visible="true" weight="0.20046084" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Debug" order="6" sideWeight="0.49125597" weight="0.3721198" />
@@ -581,7 +721,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/prepro.py</url>
-          <line>207</line>
+          <line>214</line>
           <option name="timeStamp" value="509" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -630,11 +770,6 @@
           <option name="timeStamp" value="643" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/2-NER/LSTM-NER/main.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="645" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/3-Polarity/FF-Polarity/Main.py</url>
           <line>50</line>
           <option name="timeStamp" value="679" />
@@ -648,6 +783,21 @@
           <url>file://$PROJECT_DIR$/1-ADC/CNN-ADC/ready_to_train.py</url>
           <line>91</line>
           <option name="timeStamp" value="688" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/prepro.py</url>
+          <line>195</line>
+          <option name="timeStamp" value="692" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/2-NER/LSTM-NER/main.py</url>
+          <line>311</line>
+          <option name="timeStamp" value="693" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/1-ADC/CNN-ADC/ready_to_train.py</url>
+          <line>108</line>
+          <option name="timeStamp" value="694" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -792,41 +942,6 @@ old['yelp'] = data['yelp']</expression-string>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/engine/sequential.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="142" column="35" selection-start-line="142" selection-start-column="35" selection-end-line="142" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/SemEval2016-Task5-ABSA/SB1/LAPT/ABSA16_Laptops_Train_SB1_v2.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="4851" column="44" selection-start-line="4851" selection-start-column="44" selection-end-line="4851" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/FF-ACD/results-FF-ACD" />
-    <entry file="file://$PROJECT_DIR$/1-ADC/FF-ACD/weigths.hdf5">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/tensorflow/python/framework/ops.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="3688" selection-start-line="3688" selection-end-line="3688" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/tensorflow/python/client/session.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="1439" selection-start-line="1439" selection-end-line="1439" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/plotting/google synt stop-removed punct-kept.png" />
-    <entry file="file://$PROJECT_DIR$/plotting/google synt stop-kept punct-kept.png" />
-    <entry file="file://$PROJECT_DIR$/plotting/google no-synt stop-kept punct-kept.png" />
     <entry file="file://$PROJECT_DIR$/plotting/google no-synt stop-removed punct-kept.png" />
     <entry file="file://$PROJECT_DIR$/plotting/glove synt stop-removed punct-removed.png" />
     <entry file="file://$PROJECT_DIR$/plotting/glove synt stop-removed punct-kept.png" />
@@ -849,16 +964,6 @@ old['yelp'] = data['yelp']</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ACDData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="96" selection-start-line="96" selection-end-line="96" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/SemEval.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="173">
@@ -871,16 +976,6 @@ old['yelp'] = data['yelp']</expression-string>
     </entry>
     <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/model.png">
       <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="217" column="29" selection-start-line="217" selection-start-column="29" selection-end-line="217" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/losses.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -968,16 +1063,6 @@ old['yelp'] = data['yelp']</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/FF-ACD/Main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-506">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/3-Polarity/ATAE-LSTM/atae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
@@ -1001,33 +1086,6 @@ old['yelp'] = data['yelp']</expression-string>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1268">
-          <caret line="68" column="18" selection-start-line="68" selection-start-column="18" selection-end-line="68" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/ready_to_train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1483">
-          <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="310" selection-start-line="310" selection-end-line="310" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1037,10 +1095,126 @@ old['yelp'] = data['yelp']</expression-string>
     <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/ACDData.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/validation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="28" column="4" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/FF-ACD/Main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="91" column="81" selection-start-line="91" selection-start-column="31" selection-end-line="91" selection-end-column="81" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/site-packages/keras/engine/network.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="482" column="8" selection-start-line="482" selection-start-column="8" selection-end-line="482" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/yelp_ready_to_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="94" selection-start-line="94" selection-end-line="97" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ACDData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="46">
+          <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/google_ready_to_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/LSTM-ACD/komn_ready_to_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="17" selection-start-line="17" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TextPreprocessor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="75" column="19" selection-start-line="75" selection-start-column="19" selection-end-line="75" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/data/NER-ABSA-16_Restaurants_Train.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2574" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/data/NER-ABSA-16_Restaurants_Test.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1518" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/prepro.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="198" column="13" lean-forward="true" selection-start-line="198" selection-start-column="13" selection-end-line="198" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/conda/conda/envs/tf_gpu/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="312" column="16" selection-start-line="312" selection-start-column="16" selection-end-line="312" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/ready_to_train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="105" column="86" selection-start-line="105" selection-start-column="86" selection-end-line="105" selection-end-column="86" />
+        <state relative-caret-position="-382">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/LSTM-NER/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1403">
+          <caret line="249" column="8" selection-start-line="249" selection-start-column="8" selection-end-line="249" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/1-ADC/CNN-ADC/MAIN.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="68" column="21" selection-start-line="68" selection-start-column="21" selection-end-line="68" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2-NER/GRU-NER/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="227" column="33" selection-start-line="227" selection-start-column="33" selection-end-line="227" selection-end-column="33" />
         </state>
       </provider>
     </entry>

@@ -66,7 +66,7 @@ models = [None]*12
 
 x_train_val = [x_train_val]
 x_test = [x_test]
-if use_syntax:
+if use_syntax:main.py
     x_train_val.append(x_sytax_train)
     x_test.append(x_sytax_test)
 

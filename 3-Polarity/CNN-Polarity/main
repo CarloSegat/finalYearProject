@@ -1,13 +1,95 @@
+import sklearn
+
 from keras import Input, Model
 from keras.layers import Embedding, Dropout, concatenate, Convolution1D, GlobalMaxPooling1D, Dense, Flatten
 from keras.optimizers import nadam
 from PolarityData import PolarityData
-from embeddings.Embeddings import Komn
+from embeddings.Embeddings import Komn, Yelp, Google
+import numpy as np
 
-# Options
-use_syntax = False
-batch_size = 64
-epochs = 1
+from utils import dump_gzip, load_gzip
+
+d = load_gzip('CNN-Polarity-Results')
+
+all_scores = {'komn':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                     'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
+             'no-synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                        'stop-removed':{'punct-kept':[], 'punct-removed':[]}}
+            },
+
+             'google':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                             'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
+                     'no-synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                                'stop-removed':{'punct-kept':[], 'punct-removed':[]}}
+                    },
+
+            'yelp':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                             'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
+                     'no-synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
+                                'stop-removed':{'punct-kept':[], 'punct-removed':[]}}
+                    }
+            }
+
+def train(use_syntax, w, x_train, x_test, y_train, y_test,
+          x_syntax_train, x_syntax_test, epochs=64, batch_size=64):
+
+    def get_model(use_syntax, w):
+        aspect_input = Input(shape=(1,))
+        asp_embedding = Embedding(input_dim=12,
+                                  output_dim=12,
+                                  trainable=True)(aspect_input)
+        asp_embedding = Flatten()(asp_embedding)
+        input_text = Input(shape=(80,))
+        embs = Embedding(input_dim=len(w), output_dim=len(w[0]),
+                         trainable=False,
+                         weights=[w])(input_text)
+        embs = Dropout(0.2)(embs)
+
+        if use_syntax:
+            syntax_input = Input(shape=(80, 300,))
+            embs = concatenate([embs, syntax_input])
+
+        conv_blocks = []
+        for sz in (2, 3, 5):
+            conv = Convolution1D(filters=100,
+                                 kernel_size=sz,
+                                 padding="valid",
+                                 activation="relu",
+                                 strides=1)(embs)
+            conv = GlobalMaxPooling1D()(conv)
+            conv_blocks.append(conv)
+        convolu = concatenate(conv_blocks)
+        lstm = Dropout(0.2)(convolu)
+
+        convolu_and_aspect = concatenate([convolu, asp_embedding])
+
+        dense = Dense(100, activation='relu')(convolu_and_aspect)
+        output = Dense(3, activation='sigmoid')(dense)
+
+        if use_syntax:
+            inputs = [input_text, aspect_input, syntax_input]
+        else:
+            inputs = [input_text, aspect_input]
+        model = Model(inputs, output)
+
+        model.compile(loss='categorical_crossentropy', metrics=['acc'], optimizer='nadam')
+        return model
+
+    model = get_model(use_syntax, w)
+
+    if use_syntax:
+        model.fit([x_train[0], x_train[1], x_syntax_train],
+                  y_train, epochs=epochs, batch_size=batch_size)
+        pred_test = model.predict([x_test[0], x_test[1], x_syntax_test],
+                                  batch_size=batch_size)
+    else:
+        model.fit([x_train[0], x_train[1]],
+                  y_train, epochs=epochs, batch_size=batch_size)
+        pred_test = model.predict([x_test[0], x_test[1]],
+                                  batch_size=batch_size)
+    pred_test = np.argmax(pred_test, axis=1)
+    pred_test = np.eye(3)[pred_test]
+    return sklearn.metrics.f1_score(y_test, pred_test, average='micro')
 
 # Data
 p = PolarityData()
@@ -15,55 +97,31 @@ p = PolarityData()
 k = Komn(p.make_normal_vocabulary(), p.make_syntactical_vocabulary())
 x_syntax_train, x_syntax_test = p.get_x_train_test_syntax_polarity(k, pad=True)
 x_syntax_train, x_syntax_test = x_syntax_train[:, :, 300:600], x_syntax_test[:, :, 300:600]
-x_train, y_train, x_test, y_test, w = p.get_data_as_integers_and_emb_weights_polarity(k)
-
-# Net
-aspect_input = Input(shape=(1,))
-asp_embedding = Embedding(input_dim=12,
-                        output_dim=12,
-                        trainable=True)(aspect_input)
-asp_embedding = Flatten()(asp_embedding)
-input_text = Input(shape=(80,))
-embs = Embedding(input_dim=len(w), output_dim=len(w[0]),
-                        trainable=False,
-                        weights=[w])(input_text)
-embs = Dropout(0.2)(embs)
-
-conv_blocks = []
-for sz in (2, 3, 5):
-    conv = Convolution1D(filters=100,
-                         kernel_size=sz,
-                         padding="valid",
-                         activation="relu",
-                         strides=1)(embs)
-    conv = GlobalMaxPooling1D()(conv)
-    conv_blocks.append(conv)
-convolu = concatenate(conv_blocks)
-lstm = Dropout(0.2)(convolu)
-
-convolu_and_aspect = concatenate([convolu, asp_embedding])
-
-if use_syntax:
-    syntax_input = Input(shape=(80, 300,))
-    embs = concatenate([embs, syntax_input])
 
 
-dense = Dense(100, activation='relu')(convolu_and_aspect)
-output = Dense(3, activation='sigmoid')(dense)
+# Embs
+yelp = Yelp(p.make_normal_vocabulary())
+komn = Komn(p.make_normal_vocabulary(), p.make_syntactical_vocabulary())
+google = Google(p.make_normal_vocabulary())
 
-if use_syntax:
-    inputs = [input_text, aspect_input, syntax_input]
-else:
-    inputs = [input_text, aspect_input]
-model = Model(inputs, output)
+batch_sizes = [16, 32, 64]
 
-opti = nadam()
-model.compile(loss='categorical_crossentropy', metrics=['acc'], optimizer=opti)
+for pun, punct in [(True, 'punct-removed'), (False, 'punct-kept')]:
+    print(punct)
+    for s, stop in [(True, 'stop-removed'), (False, 'stop-kept')]:
+        print(stop)
+        for embedding, emb in [(yelp, 'yelp'), (komn, 'komn'), (google, 'google')]:
+            print(emb)
+            x_train, y_train, x_test, y_test, w = \
+                p.get_data_as_integers_and_emb_weights_polarity(embedding, s, pun)
 
-#Train
-if use_syntax:
-    x_train.append(x_syntax_train)
-    x_test.append(x_syntax_test)
-    model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)
-else:
-    model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size)
+
+            for syntax, synt in [(True, 'synt'), (False, 'no-synt')]:
+                print(synt)
+                f1s = []
+                for i in range(1):
+                    f1s.append(train(syntax, w, x_train, x_test, y_train, y_test,
+                                     x_syntax_train, x_syntax_test, epochs=1))
+                all_scores[emb][synt][stop][punct] = f1s
+
+dump_gzip(all_scores, 'CNN-Polarity-Results')

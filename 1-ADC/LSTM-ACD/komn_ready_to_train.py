@@ -109,9 +109,7 @@ for punctuation_removed, punct in [(True, 'punct-removed'), (False, 'punct-kept'
             for syntax, synt in [(True, 'synt'), (False, 'no-synt')]:
                 print(synt)
                 f1s = []
-                x_train, _, x_test, _, w = data.get_data_as_integers_and_emb_weights(embedding,
-                                                                no_stop=stopwords_removed,
-                                                                no_punct=punctuation_removed)
+
                 for i in range(1):
                     batch_size = batch_sizes[random.randint(0, 2)]
                     f1s.append(train(syntax, syntax_train, syntax_test, y_train_val, y_test, x_train, x_test, w,

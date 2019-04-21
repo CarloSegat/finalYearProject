@@ -102,7 +102,7 @@ for punctuation_removed, punct in [(True, 'punct-removed'), (False, 'punct-kept'
     print(punct)
     for stopwords_removed, stop in [(True, 'stop-removed'), (False, 'stop-kept')]:
         print(stop)
-        for embedding, emb in [(google, 'google')]: # , (google, 'google'), (yelp, 'yelp'), (komn, 'komn')
+        for embedding, emb in [(yelp, 'yelp')]: # , (google, 'google'), (yelp, 'yelp'), (komn, 'komn')
             print(emb)
             for syntax, synt in [(True, 'synt'), (False, 'no-synt')]:
                 print(synt)

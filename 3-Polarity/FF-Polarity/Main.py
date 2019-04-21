@@ -1,15 +1,15 @@
 import sklearn
-
+import sys
+sys.path.append('..\..\.')
 import numpy as np
 import random
-
 from keras import Input, Model
 from keras.layers import Embedding, concatenate, Dense, Flatten
-from keras.optimizers import nadam
-
 from PolarityData import PolarityData
 from embeddings.Embeddings import Komn, Yelp, Google
-from utils import dump_gzip
+from utils import dump_gzip, load_gzip
+
+#l = load_gzip('LSTM-ACD-Results')
 
 all_scores = {'komn':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
                      'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
@@ -23,11 +23,6 @@ all_scores = {'komn':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
                                 'stop-removed':{'punct-kept':[], 'punct-removed':[]}}
                     },
 
-             'glove':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
-                             'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
-                     'no-synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
-                                'stop-removed':{'punct-kept':[], 'punct-removed':[]}}
-                    },
             'yelp':{'synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
                              'stop-removed':{'punct-kept':[], 'punct-removed':[]}},
                      'no-synt':{'stop-kept':{'punct-kept':[], 'punct-removed':[]},
@@ -53,7 +48,7 @@ def train(use_syntax, normal_sow_train, normal_sow_test, cat_train, cat_test,
             full_sentence = sentence_input
 
         asp_embedding = Embedding(input_dim=12,
-                                output_dim=12,
+                                output_dim=300,
                                 trainable=True)(aspect_input)
         asp_embedding = Flatten()(asp_embedding)
         all_input = concatenate([full_sentence, asp_embedding])
@@ -67,14 +62,15 @@ def train(use_syntax, normal_sow_train, normal_sow_test, cat_train, cat_test,
 
     model = get_model(use_syntax)
     if use_syntax:
-        model.fit([normal_sow_train, syntax_sow_train, cat_train], y_train, epochs=50, batch_size=batch_size)
+        model.fit([normal_sow_train, syntax_sow_train, cat_train], y_train, epochs=1, batch_size=batch_size)
+        pred_test = model.predict([normal_sow_test, syntax_sow_test, cat_test], batch_size=batch_size)
     else:
-        model.fit([normal_sow_train, cat_train], y_train, epochs=50, batch_size=batch_size)
+        model.fit([normal_sow_train, cat_train], y_train, epochs=1, batch_size=batch_size)
+        pred_test = model.predict([normal_sow_test, cat_test], batch_size=batch_size)
 
-    pred_test = model.predict(normal_sow_test, batch_size=batch_size)
     pred_test = np.argmax(pred_test, axis=1)
     pred_test = np.eye(3)[pred_test]
-    print(sklearn.metrics.f1_score(y_test, pred_test, average='micro'))
+    return sklearn.metrics.f1_score(y_test, pred_test, average='micro')
 
 # Data
 data = PolarityData()
@@ -103,13 +99,13 @@ for p, punct in [(True, 'punct-removed'), (False, 'punct-kept')]:
             for syntax, synt in [(True, 'synt'), (False, 'no-synt')]:
                 print(synt)
                 f1s = []
-                for i in range(10):
+                for i in range(1):
                     batch_size = batch_sizes[random.randint(0, 2)]
                     f1s.append(train(syntax, normal_sow_train, normal_sow_test, cat_train, cat_test,
                                      y_train, y_test, syntax_sow_train, syntax_sow_test, batch_size=batch_size))
 
                 all_scores[emb][synt][stop][punct] = f1s
 
-dump_gzip(all_scores, 'LSTM-ACD-Results-Yelp')
+dump_gzip(all_scores, 'FF-Polarity-Results')
 
 

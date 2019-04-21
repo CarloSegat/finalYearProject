@@ -167,7 +167,7 @@ class CNN_BLSTM(object):
             predLabels.append(pred)
         return predLabels, correctLabels
 
-    def tag_dataset_syntax(self, dataset, model):
+    def tag_dataset_syntax(self, dataset, model, use_syntax):
         """Tag data with numerical values"""
         correctLabels = []
         predLabels = []
@@ -178,7 +178,7 @@ class CNN_BLSTM(object):
             char = np.asarray([char])
             syntax = np.asarray([syntax])
             if use_syntax:
-                pred = model.predict([tokens, casing, char, syntax[:, :, 300:600]], verbose=False)[0]
+                pred = model.predict([tokens, casing, char, syntax], verbose=False)[0]
             else:
                 pred = model.predict([tokens, casing, char], verbose=False)[0]
 
@@ -187,7 +187,7 @@ class CNN_BLSTM(object):
             predLabels.append(pred)
         return predLabels, correctLabels
 
-    def buildModel(self):
+    def buildModel(self, use_syntax):
         """Model layers"""
         self.model = None
         # character input
@@ -251,18 +251,19 @@ class CNN_BLSTM(object):
         """Default training"""
 
         self.f1_test_history = []
+        self.max_f1 = []
 
         for epoch in range(max_epochs):
             print("Epoch {}/{}".format(epoch, self.epochs))
             for i, batch in enumerate(iterate_minibatches_syntax(self.train_batch, self.train_batch_len)):
                 labels, tokens, casing, char, syntax = batch
                 if use_syntax:
-                    self.model.train_on_batch([tokens, casing, char, syntax[:, :, 300:600]], labels)
+                    self.model.train_on_batch([tokens, casing, char, syntax], labels)
                 else:
                     self.model.train_on_batch([tokens, casing, char], labels)
 
             # compute F1 scores
-            predLabels, correctLabels = self.tag_dataset_syntax(self.test_batch, self.model)
+            predLabels, correctLabels = self.tag_dataset_syntax(self.test_batch, self.model, use_syntax)
             pre_test, rec_test, f1_test = compute_f1(predLabels, correctLabels, self.idx2Label)
             self.f1_test_history.append(f1_test)
 
@@ -305,13 +306,13 @@ for p, punct in [(True, 'punct-removed'), (False, 'punct-kept')]:
             for syntax, synt in [(True, 'synt'), (False, 'no-synt')]:
                 print(synt)
                 f1s = []
-                for i in range(10):
+                for i in range(1):
                     batch_size = batch_sizes[random.randint(0, 2)]
-                    cnn_blstm.buildModel()
-                    f1s.append(cnn_blstm.train(synt))
+                    cnn_blstm.buildModel(syntax)
+                    f1s.append(cnn_blstm.train(syntax, max_epochs=1))
 
                 all_scores[emb][synt][stop][punct] = f1s
 
-dump_gzip(all_scores, 'LSTM-ACD-Results-Yelp')
+dump_gzip(all_scores, 'LSTM-NER-Results')
 
 # best: 0.6008 f1

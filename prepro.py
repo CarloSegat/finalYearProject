@@ -186,12 +186,14 @@ def createMatrices_syntax(sentences, syntax_sentences, word2Idx, label2Idx,
                 except Exception:
                     print(x)
             # Get the label and map to int
+
+
             wordIndices.append(wordIdx)
             caseIndices.append(getCasing(word, case2Idx))
             charIndices.append(charIdx)
             labelIndices.append(label2Idx[label])
-
-        dataset.append([wordIndices, caseIndices, charIndices, labelIndices, syntax_sentence])
+        if not len(wordIndices) == 0:
+            dataset.append([wordIndices, caseIndices, charIndices, labelIndices, syntax_sentence])
 
     return dataset
 

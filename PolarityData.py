@@ -21,15 +21,24 @@ class PolarityData(SemEvalData):
                 Y_test.append(p[opinion['polarity']])
         return np.array(Y_train), np.array(Y_test)
 
-    def get_data_as_integers_and_emb_weights_polarity(self, embbedings):
+    def get_data_as_integers_and_emb_weights_polarity(self, embbedings, no_stop=False, no_punct=False):
         '''Returns sentences converted using word indices and also the
         weights to put intot he embedding layer to get the conversion'''
 
         def map_sentences_to_cat(output, trained_tagged, trained_normal, word_to_int):
             for x, xx in zip(trained_tagged, trained_normal):
                 build = []
-                for w in x[0]:
+                s = x[0]
+
+                if no_stop:
+                    s = self.text_preprocessor.remove_stopwords(s)
+                if no_punct:
+                    s = self.text_preprocessor.remove_punctuation(s)
+
+                for w in s:
                     build.append(word_to_int[w])
+
+
                 for opinion in trained_normal[xx]['opinions']:
                     cat = ASPECT_CATEGORIES[opinion['category']]
                     cat = np.where(cat)[0][0]

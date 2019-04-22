@@ -12,17 +12,18 @@ stop = ['stop-kept', 'stop-removed']
 punct = ['punct-kept', 'punct-removed']
 
 
-def get_syntax_and_noSyntax_mean(data):
+def get_syntax_and_noSyntax_mean(data, emb):
     syntax, no_syntax = 0, 0
     for e in embs:
         for s in synt:
             for st in stop:
                 for p in punct:
-                    if s == 'no-synt':
-                        no_syntax += sum(data[e][s][st][p])
-                    else:
-                        syntax += sum(data[e][s][st][p])
-    return format(syntax / 12*10, '.4f') + '  ' +  format(no_syntax / 12*10, '.4f')
+                    if e == emb:
+                        if s == 'no-synt':
+                            no_syntax += sum(data[e][s][st][p])
+                        else:
+                            syntax += sum(data[e][s][st][p])
+    return format(syntax / 4*10, '.4f') + '  ' +  format(no_syntax / 4*10, '.4f')
 
 def plot(data, name):
     kde = scipy.stats.gaussian_kde(data,bw_method=None)
@@ -33,8 +34,10 @@ def plot(data, name):
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.05), shadow=True, ncol=2)
     #plt.show()
 
-data = load_gzip('FF-ACD-Results')
+data_ff_acd = load_gzip('FF-ACD-Results')
+data_cnn_acd = load_gzip('CNN-ACD-Results')
 
+data = data_ff_acd
 
 new_legend = {'stop-kept': 'stopwords', 
               'stop-removed': 'no-stopwprds',
@@ -49,7 +52,8 @@ for e in embs:
                 legend = e+ ' '+new_legend[s]+ ' '+new_legend[st]+ ' '+new_legend[p]
                 plot(data[e][s][st][p], legend)
     #plt.tight_layout()
-    plt.figtext(.15, .80, 'F1 mean for syntax and no-syntax:\n' + get_syntax_and_noSyntax_mean(data))
+    plt.figtext(.15, .80, 'F1 mean for syntax and no-syntax:\n' \
+    + get_syntax_and_noSyntax_mean(data, e))
     plt.savefig('img/'+ e + '.png', figsize=(100,50), bbox_inches='tight')
     plt.clf()
     plt.cla()
